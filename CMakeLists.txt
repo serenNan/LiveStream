@@ -11,6 +11,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 set(SOURCE
     ${CMAKE_SOURCE_DIR}/src/base/TTime.cpp
+    ${CMAKE_SOURCE_DIR}/test/main.cpp
 )
 
 set(INCLUDE
@@ -19,6 +20,7 @@ set(INCLUDE
 
 set(TEST
     ${CMAKE_SOURCE_DIR}/test/TTime_test.cpp
+    
 )
 
 add_executable(LiveStreaming ${SOURCE} ${INCLUDE})
