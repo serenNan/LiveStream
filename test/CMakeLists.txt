@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 
 set(TEST_SOURCE
     TTime_test.cpp
-    # test.cpp
+    StringUtils_test.cpp
     ${CMAKE_SOURCE_DIR}/src/base/TTime.cpp
+    ${CMAKE_SOURCE_DIR}/src/base/StringUtils.cpp
 )
 
 add_executable(LiveStreamingTest ${TEST_SOURCE})

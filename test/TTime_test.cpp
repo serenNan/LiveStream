@@ -1,7 +1,6 @@
 #include "TTime.h"
 #include <gtest/gtest.h>
-using namespace tmms;
-using namespace base;
+using namespace tmms::base;
 
 TEST(TTimeTest, NowMS_ReturnsCurrentTime) {
     int64_t time1 = TTime::NowMS();
@@ -42,11 +41,4 @@ TEST(TTimeTest, ISOTime_ReturnsValidISO8601Format) {
     std::cout << "ISO8601格式时间: " << isoTime << std::endl;
     EXPECT_EQ(isoTime.length(), 20);
     EXPECT_EQ(isoTime[19], 'Z');
-}
-
-int main(int argc, char **argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    std::cout << "这是test " << std::endl;
-    return RUN_ALL_TESTS();
 }

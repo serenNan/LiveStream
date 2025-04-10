@@ -1,8 +1,7 @@
 #include "TTime.h"
 #include <chrono>
 #include <cstdint>
-using namespace tmms;
-using namespace base;
+using namespace tmms::base;
 
 // 表示当前UTC时间，单位是毫秒
 int64_t TTime::NowMS()
