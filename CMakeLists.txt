@@ -9,33 +9,21 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 set(SOURCE
-    ${CMAKE_SOURCE_DIR}/src/base/TTime.cpp
     ${CMAKE_SOURCE_DIR}/src/main.cpp
 )
 
-set(TEST_SOURCE
-    # ${CMAKE_SOURCE_DIR}/test/TTime_test.cpp
-    ${CMAKE_SOURCE_DIR}/test/test.cpp
-    ${CMAKE_SOURCE_DIR}/src/base/TTime.cpp
-)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/base)
+add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
 add_executable(LiveStreaming ${SOURCE})
-add_executable(LiveStreamingTest ${TEST_SOURCE})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 ${CMAKE_SOURCE_DIR}/include
+${CMAKE_SOURCE_DIR}/include/base
 )
 
-target_include_directories(LiveStreamingTest PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
-)
 # 链接库
 target_link_libraries(${PROJECT_NAME}
-    libgtest.a
-    libgtest_main.a
-)
-
-target_link_libraries(LiveStreamingTest
     libgtest.a
     libgtest_main.a
 )
