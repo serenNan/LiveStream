@@ -5,36 +5,27 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Find GoogleTest
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
+# 链接库文件目录
+link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 set(SOURCE
     ${CMAKE_SOURCE_DIR}/src/base/TTime.cpp
-    ${CMAKE_SOURCE_DIR}/test/main.cpp
-)
-
-set(INCLUDE
-    ${CMAKE_SOURCE_DIR}/include/TTime.h
-)
-
-set(TEST
     ${CMAKE_SOURCE_DIR}/test/TTime_test.cpp
+)
+
+set(MYTEST
     
 )
 
-add_executable(LiveStreaming ${SOURCE} ${INCLUDE})
+add_executable(LiveStreaming ${SOURCE} ${MYTEST})
 
-add_executable(TTime_test ${TEST} ${SOURCE})
-target_include_directories(TTime_test PRIVATE ${CMAKE_SOURCE_DIR}/include)
-
-# Link GoogleTest to test executable
-target_link_libraries(TTime_test ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES} pthread)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 ${CMAKE_SOURCE_DIR}/include
 )
 
-# Enable testing
-enable_testing()
-add_test(NAME TTime_test COMMAND TTime_test)
+# 链接库
+target_link_libraries(${PROJECT_NAME}
+    libgtest.a       
+    libgtest_main.a  
+)
