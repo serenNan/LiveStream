@@ -25,7 +25,7 @@ int64_t TTime::Now(int &year, int &month, int &day, int &hour, int &minute, int 
     auto now = std::chrono::system_clock::now();
     time_t time = std::chrono::system_clock::to_time_t(now);
     tm tm_time;
-    gmtime_r(&time, &tm_time);
+    localtime_r(&time, &tm_time);
     
     year = tm_time.tm_year + 1900;
     month = tm_time.tm_mon + 1;
@@ -42,7 +42,7 @@ std::string TTime::ISOTime()
     auto now = std::chrono::system_clock::now();
     time_t time = std::chrono::system_clock::to_time_t(now);
     tm tm_time;
-    gmtime_r(&time, &tm_time);
+    localtime_r(&time, &tm_time);
 
     char buffer[32];
     strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", &tm_time);
