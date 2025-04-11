@@ -1,6 +1,7 @@
 #include "NonCopyable.h"
 #include "Singleton.h"
 #include <iostream>
+#include "gtest/gtest.h"
 
 using namespace tmms::base;
 
@@ -17,10 +18,9 @@ class A : public NonCopyable
 
 #define sA Singleton<A>::Instance()
 
-int main()
+TEST(SingletonTest, BasicTest)
 {
     sA->print();
-    return 0;
 }
 
 

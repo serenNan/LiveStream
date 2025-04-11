@@ -2,6 +2,8 @@
 set(BASE_SOURCE
     TTime.cpp
     StringUtils.cpp
+    Task.cpp
+    TaskManager.cpp
 )
 
 add_library(base ${BASE_SOURCE})
