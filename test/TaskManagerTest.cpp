@@ -40,7 +40,7 @@ void TestTask()
 TEST(TaskManagerTest, BasicFunctionality)
 {
     TestTask();
-    for (int i = 0; i < 100; ++i) // 限制循环次数以避免无限执行
+    for (int i = 0; i < 100; ++i) 
     {
         sTaskManager->OnWork();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));

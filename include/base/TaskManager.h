@@ -19,19 +19,19 @@ namespace tmms
           public:
             TaskManager() = default;
             ~TaskManager() = default;
-            
+
             /**
              * @brief 执行所有到期任务
              */
             void OnWork();
-            
+
             /**
              * @brief 添加任务
              * @param task 要添加的任务指针
              * @return bool 是否添加成功
              */
             bool Add(TaskPtr &task);
-            
+
             /**
              * @brief 删除任务
              * @param task 要删除的任务指针

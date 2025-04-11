@@ -13,6 +13,7 @@ void TaskManager::OnWork()
         if ((*iter)->When() < now)
         {
             (*iter)->Run();
+            // 再次检查任务时间(判断是否是单次任务)
             if ((*iter)->When() < now)
             {
                 iter = tasks_.erase(iter);
