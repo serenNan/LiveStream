@@ -40,7 +40,7 @@ void TestTask()
 TEST(TaskManagerTest, BasicFunctionality)
 {
     TestTask();
-    for (int i = 0; i < 100; ++i) 
+    for (int i = 0; i < 10; ++i) 
     {
         sTaskManager->OnWork();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));

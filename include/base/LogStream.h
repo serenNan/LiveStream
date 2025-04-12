@@ -49,7 +49,8 @@ namespace tmms
  */
 #define LOG_TRACE                                                                                  \
     if (tmms::base::g_logger->GetLogLevel() <= tmms::base::kTrace)                                 \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kTrace, __func__)
+    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kTrace,            \
+                          __FUNCTION__)
 
 /**
  * @brief 调试级别日志宏
@@ -57,7 +58,8 @@ namespace tmms
  */
 #define LOG_DEBUG                                                                                  \
     if (tmms::base::g_logger->GetLogLevel() <= tmms::base::kDebug)                                 \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kDebug, __func__)
+    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kDebug,            \
+                          __FUNCTION__)
 
 /**
  * @brief 信息级别日志宏
@@ -71,10 +73,11 @@ namespace tmms
  * @brief 警告级别日志宏
  */
 #define LOG_WARN                                                                                   \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kWarn, __func__)
+    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kWarn, __FUNCTION__)
 
 /**
  * @brief 错误级别日志宏
  */
 #define LOG_ERROR                                                                                  \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kError, __func__)
+    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kError,            \
+                          __FUNCTION__)

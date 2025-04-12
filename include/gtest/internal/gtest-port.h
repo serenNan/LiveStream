@@ -1242,7 +1242,7 @@ GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
 //
 // This class is only for testing Google Test's own constructs. Do not
 // use it in user tests, either directly or indirectly.
-// TODO(b/203539622): Replace unconditionally with absl::Notification.
+// (b/203539622): Replace unconditionally with absl::Notification.
 class GTEST_API_ Notification {
  public:
   Notification() : notified_(false) {}
