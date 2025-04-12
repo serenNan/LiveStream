@@ -18,7 +18,6 @@ add_executable(LiveStreamingTest ${TEST_SOURCE})
 
 target_include_directories(LiveStreamingTest PRIVATE
     ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/include/base
 )
 
 target_link_libraries(LiveStreamingTest

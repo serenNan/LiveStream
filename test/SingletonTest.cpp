@@ -1,7 +1,7 @@
-#include "NonCopyable.h"
-#include "Singleton.h"
-#include <iostream>
+#include "base/Singleton.h"
+#include "base/NonCopyable.h"
 #include "gtest/gtest.h"
+#include <iostream>
 
 using namespace tmms::base;
 

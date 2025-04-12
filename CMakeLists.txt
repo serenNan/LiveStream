@@ -19,7 +19,6 @@ add_executable(LiveStreaming ${SOURCE})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 ${CMAKE_SOURCE_DIR}/include
-${CMAKE_SOURCE_DIR}/include/base
 )
 
 # 链接库
