@@ -4,6 +4,8 @@ set(BASE_SOURCE
     StringUtils.cpp
     Task.cpp
     TaskManager.cpp
+    Logger.cpp
+    LogStream.cpp
 )
 
 add_library(base ${BASE_SOURCE})
