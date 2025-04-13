@@ -130,7 +130,7 @@ void FileLogManager::RotateMinutes(const FileLogPtr &file)
     if (file->GetFileSize() > 0)
     {
         char buf[128] = {0};
-        sprintf(buf, "_%04d-%02d-%02dT%02d02%d", last_year_, last_month_, last_day_, last_hour_,last_minute_);
+        sprintf(buf, "_%04d-%02d-%02dT%02d%02d", last_year_, last_month_, last_day_, last_hour_,last_minute_);
         std::string filePath = file->GetFilePath();
         std::string newFilePath = StringUtils::FilePath(filePath);
         std::string newFileName = StringUtils::FileName(filePath);

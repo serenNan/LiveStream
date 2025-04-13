@@ -44,5 +44,5 @@ namespace tmms
             std::mutex lock_;                  ///< 保护任务集合的互斥锁
         };
     } // namespace base
-#define sTaskManager tmms::base::Singleton<TaskManager>::Instance()
-} // namespace tmms
+  } // namespace tmms
+  #define sTaskManager tmms::base::Singleton<TaskManager>::Instance()

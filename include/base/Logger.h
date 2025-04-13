@@ -1,7 +1,6 @@
 #pragma once
 #include "FileLog.h"
 #include "NonCopyable.h"
-#include "base/FileLogManager.h"
 #include <string>
 namespace tmms
 {

@@ -18,7 +18,7 @@ class A : public NonCopyable
 
 #define sA Singleton<A>::Instance()
 
-TEST(SingletonTest, BasicTest)
+TEST(TestSingleton, BasicTest)
 {
     sA->print();
 }

@@ -37,7 +37,7 @@ void TestTask()
     sTaskManager->Add(task4);
 }
 
-TEST(TaskManagerTest, BasicFunctionality)
+TEST(TestTaskManager, BasicFunctionality)
 {
     TestTask();
     for (int i = 0; i < 10; ++i) 

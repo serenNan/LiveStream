@@ -2,35 +2,40 @@
 #include "gtest/gtest.h"
 using namespace tmms::base;
 
-TEST(StringUtilsTest, StartsWith) {
+TEST(TestStringUtils, StartsWith)
+{
     EXPECT_TRUE(StringUtils::StartsWith("hello world", "hello"));
     EXPECT_FALSE(StringUtils::StartsWith("hello world", "world"));
     EXPECT_TRUE(StringUtils::StartsWith("hello", ""));
     EXPECT_FALSE(StringUtils::StartsWith("", "hello"));
 }
 
-TEST(StringUtilsTest, EndsWith) {
+TEST(TestStringUtils, EndsWith)
+{
     EXPECT_TRUE(StringUtils::EndsWith("hello world", "world"));
     EXPECT_FALSE(StringUtils::EndsWith("hello world", "hello"));
     EXPECT_TRUE(StringUtils::EndsWith("hello", ""));
     EXPECT_FALSE(StringUtils::EndsWith("", "hello"));
 }
 
-TEST(StringUtilsTest, FilePath) {
+TEST(TestStringUtils, FilePath)
+{
     EXPECT_EQ(StringUtils::FilePath("/home/user/file.txt"), "/home/user");
     EXPECT_EQ(StringUtils::FilePath("C:\\Users\\file.txt"), "C:\\Users");
     EXPECT_EQ(StringUtils::FilePath("file.txt"), "");
     EXPECT_EQ(StringUtils::FilePath(""), "");
 }
 
-TEST(StringUtilsTest, FileNameExt) {
+TEST(TestStringUtils, FileNameExt)
+{
     EXPECT_EQ(StringUtils::FileNameExt("/home/user/file.txt"), "file.txt");
     EXPECT_EQ(StringUtils::FileNameExt("C:\\Users\\file.txt"), "file.txt");
     EXPECT_EQ(StringUtils::FileNameExt("file.txt"), "file.txt");
     EXPECT_EQ(StringUtils::FileNameExt(""), "");
 }
 
-TEST(StringUtilsTest, FileName) {
+TEST(TestStringUtils, FileName)
+{
     EXPECT_EQ(StringUtils::FileName("/home/user/file.txt"), "file");
     EXPECT_EQ(StringUtils::FileName("C:\\Users\\file.txt"), "file");
     EXPECT_EQ(StringUtils::FileName("file.txt"), "file");
@@ -38,7 +43,8 @@ TEST(StringUtilsTest, FileName) {
     EXPECT_EQ(StringUtils::FileName(""), "");
 }
 
-TEST(StringUtilsTest, Extension) {
+TEST(TestStringUtils, Extension)
+{
     EXPECT_EQ(StringUtils::Extension("/home/user/file.txt"), ".txt");
     EXPECT_EQ(StringUtils::Extension("C:\\Users\\file.txt"), ".txt");
     EXPECT_EQ(StringUtils::Extension("file.txt"), ".txt");
@@ -46,7 +52,8 @@ TEST(StringUtilsTest, Extension) {
     EXPECT_EQ(StringUtils::Extension(""), "");
 }
 
-TEST(StringUtilsTest, SplitString) {
+TEST(TestStringUtils, SplitString)
+{
     // 正常分割
     std::vector<std::string> result1 = StringUtils::SplitString("a,b,c", ",");
     EXPECT_EQ(result1.size(), 3);

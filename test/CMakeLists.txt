@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(TEST_SOURCE
-    TTimeTest.cpp
-    StringUtilsTest.cpp
-    SingletonTest.cpp
-    TaskManagerTest.cpp
-    LoggerTest.cpp
+    TestLogger.cpp
+    TestSingleton.cpp
+    TestStringUtils.cpp
+    TestTask.cpp
+    TestTTime.cpp
     ${CMAKE_SOURCE_DIR}/src/base/TTime.cpp
     ${CMAKE_SOURCE_DIR}/src/base/StringUtils.cpp
     ${CMAKE_SOURCE_DIR}/src/base/Task.cpp
