@@ -12,6 +12,9 @@ set(TEST_SOURCE
     ${CMAKE_SOURCE_DIR}/src/base/TaskManager.cpp
     ${CMAKE_SOURCE_DIR}/src/base/Logger.cpp
     ${CMAKE_SOURCE_DIR}/src/base/LogStream.cpp
+    ${CMAKE_SOURCE_DIR}/src/base/FileLog.cpp
+    ${CMAKE_SOURCE_DIR}/src/base/FileLogManager.cpp
+
 )
 
 add_executable(LiveStreamingTest ${TEST_SOURCE})

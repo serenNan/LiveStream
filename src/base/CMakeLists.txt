@@ -6,6 +6,8 @@ set(BASE_SOURCE
     TaskManager.cpp
     Logger.cpp
     LogStream.cpp
+    FileLog.cpp
+    FileLogManager.cpp
 )
 
 add_library(base ${BASE_SOURCE})
