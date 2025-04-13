@@ -1,5 +1,5 @@
-#include "base/LogStream.h"
-#include "base/TTime.h"
+#include "LogStream.h"
+#include "TTime.h"
 #include <cstring>
 #include <sched.h>
 #include <sys/syscall.h>

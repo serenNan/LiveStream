@@ -1,10 +1,10 @@
-#include "base/FileLog.h"
-#include "base/FileLogManager.h"
-#include "base/LogStream.h"
-#include "base/Logger.h"
-#include "base/TTime.h"
-#include "base/Task.h"
-#include "base/TaskManager.h"
+#include "FileLog.h"
+#include "FileLogManager.h"
+#include "LogStream.h"
+#include "Logger.h"
+#include "TTime.h"
+#include "Task.h"
+#include "TaskManager.h"
 #include "gtest/gtest.h"
 #include <chrono>
 #include <thread>

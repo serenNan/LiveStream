@@ -1,5 +1,5 @@
-#include "base/Singleton.h"
-#include "base/NonCopyable.h"
+#include "Singleton.h"
+#include "NonCopyable.h"
 #include "gtest/gtest.h"
 #include <iostream>
 

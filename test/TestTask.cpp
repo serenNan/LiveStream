@@ -1,6 +1,6 @@
-#include "base/TaskManager.h"
-#include "base/TTime.h"
-#include "base/Task.h"
+#include "TaskManager.h"
+#include "TTime.h"
+#include "Task.h"
 #include "gtest/gtest.h"
 #include <chrono>
 #include <iostream>
