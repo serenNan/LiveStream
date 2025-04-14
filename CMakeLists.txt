@@ -13,6 +13,7 @@ set(SOURCE
 )
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/base)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/network)
 add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
 

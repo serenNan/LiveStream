@@ -26,21 +26,16 @@ namespace tmms {  // Transmedia Media Streaming 的缩写
 
 ## Log日志库
 
-### C++ 标准库 <sstream>
-
-对应文件：[LogStream.h](../include/base/LogStream.h#L40)
-详细资料：[菜鸟教程](https://www.runoob.com/cplusplus/cpp-libs-sstream.html)
-
 ### `<<` 运算符重载
-对应文件：[LogStream.h](../include/base/LogStream.h#L33)
+对应代码：[LogStream.h](../include/base/LogStream.h#L33)
 对应资料：[C++重载>>和<<（输入和输出运算符）详解](https://c.biancheng.net/view/2311.html)
 
 ### 链式引用
 Learn
-对应文件：[LogStream.h](../include/base/LogStream.h#L36)
+对应代码：[LogStream.h](../include/base/LogStream.h#L36)
 
 ### g_logger
-对应文件：[LogStream.cpp](../src/base/LogStream.cpp#L9)
+对应代码：[LogStream.cpp](../src/base/LogStream.cpp#L9)
 
 ai讲解：
 `g_logger` 是一个全局日志记录器指针，它的主要作用和特点如下：
@@ -77,3 +72,39 @@ LogStream(g_logger, __FILE__, __LINE__, kInfo) << "Application started";
    - 日志输出方法应自带线程安全机制
 
 这个全局指针是连接日志前端（用户调用的LOG_XXX宏）和后端（实际写日志的实现）的关键桥梁。
+
+## 左值引用
+
+在C++中，`std::shared_ptr<Event>& event` 这个声明包含几个关键部分，我来详细解释这个引用(&)的作用：
+
+1. **std::shared_ptr<Event>**:
+   - 这是一个智能指针模板，管理Event对象的生命周期
+   - 使用引用计数机制自动释放内存
+
+2. **& 符号的作用**:
+   - 这里的`&`表示`event`是一个引用(左值引用)
+   - 它直接引用`iter->second`这个shared_ptr对象本身，而不是创建副本
+   - 这意味着对`event`的任何修改都会直接影响`iter->second`
+
+3. **为什么在这里使用引用**:
+   - 避免不必要的shared_ptr拷贝(会增加引用计数开销)
+   - 可以直接修改map中的shared_ptr对象
+   - 提高性能，减少内存操作
+
+4. **与不使用引用的区别**:
+```cpp
+std::shared_ptr<Event> event = iter->second;  // 创建副本，增加引用计数
+std::shared_ptr<Event>& event = iter->second; // 直接引用原对象
+```
+
+5. **使用场景**:
+   - 当需要直接操作容器中的智能指针时
+   - 当函数需要修改传入的shared_ptr时
+   - 当需要避免智能指针的拷贝开销时
+
+6. **注意事项**:
+   - 引用必须确保被引用的对象生命周期足够长
+   - 不能引用临时对象
+   - 在异步编程中要特别注意线程安全问题
+
+在你的代码中，这种写法可以高效地获取并可能修改events_ map中存储的Event对象。
