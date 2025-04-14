@@ -8,6 +8,7 @@ set(TEST_SOURCE
     TestStringUtils.cpp
     TestTask.cpp
     TestTTime.cpp
+    TestJsoncpp.cpp
 )
 
 add_executable(LiveStreamingTest ${TEST_SOURCE})
@@ -17,7 +18,7 @@ target_include_directories(LiveStreamingTest PRIVATE
 )
 
 target_link_libraries(LiveStreamingTest
+    base
     libgtest.a
     libgtest_main.a
-    base
 )

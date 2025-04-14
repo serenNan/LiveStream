@@ -1,6 +1,7 @@
 #include "LogStream.h"
 #include "TTime.h"
 #include <cstring>
+#include <iostream>
 #include <sched.h>
 #include <sys/syscall.h>
 #include <unistd.h>
@@ -42,5 +43,13 @@ LogStream::LogStream(Logger *logger, const char *file, int line, LogLevel level,
 LogStream::~LogStream()
 {
     stream_ << "\n";
-    logger_->WriteLog(stream_.str());
+    if (logger_)
+    {
+
+        logger_->WriteLog(stream_.str());
+    }
+    else
+    {
+        std::cout << stream_.str() << std::endl;
+    }
 }

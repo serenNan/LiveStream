@@ -5,9 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# 链接库文件目录
 
-link_directories(${CMAKE_SOURCE_DIR}/third_party/jsoncpp/lib)
 
 set(SOURCE
     ${CMAKE_SOURCE_DIR}/src/main.cpp
@@ -16,15 +14,11 @@ set(SOURCE
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/base)
 add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
+
 add_executable(LiveStreaming ${SOURCE})
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/include/base
-)
 
-# 链接库
-target_link_libraries(${PROJECT_NAME}
-    libjsoncpp.a
+# 确保主程序链接了base库和jsoncpp库
+target_link_libraries(LiveStreaming PRIVATE 
     base
 )

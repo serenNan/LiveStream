@@ -48,7 +48,7 @@ namespace tmms
  * 当日志级别<=kTrace时输出
  */
 #define LOG_TRACE                                                                                  \
-    if (tmms::base::g_logger->GetLogLevel() <= tmms::base::kTrace)                                 \
+    if (g_logger && tmms::base::g_logger->GetLogLevel() <= tmms::base::kTrace)                     \
     tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kTrace,            \
                           __FUNCTION__)
 
@@ -57,7 +57,7 @@ namespace tmms
  * 当日志级别<=kDebug时输出
  */
 #define LOG_DEBUG                                                                                  \
-    if (tmms::base::g_logger->GetLogLevel() <= tmms::base::kDebug)                                 \
+    if (g_logger && tmms::base::g_logger->GetLogLevel() <= tmms::base::kDebug)                     \
     tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kDebug,            \
                           __FUNCTION__)
 
@@ -66,18 +66,19 @@ namespace tmms
  * 当日志级别<=kInfo时输出
  */
 #define LOG_INFO                                                                                   \
-    if (tmms::base::g_logger->GetLogLevel() <= tmms::base::kInfo)                                  \
+    if (g_logger && tmms::base::g_logger->GetLogLevel() <= tmms::base::kInfo)                      \
     tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kInfo)
 
 /**
  * @brief 警告级别日志宏
  */
 #define LOG_WARN                                                                                   \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kWarn, __FUNCTION__)
+    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kWarn,  \
+                          __FUNCTION__)
 
 /**
  * @brief 错误级别日志宏
  */
 #define LOG_ERROR                                                                                  \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kError,            \
+    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kError, \
                           __FUNCTION__)

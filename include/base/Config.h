@@ -1,8 +1,10 @@
 #pragma once
+#include "FileLog.h"
+#include "Logger.h"
 #include <cstdint>
-#include "json.h"
-#include <string>
+#include <json/json.h>
 #include <memory>
+#include <string>
 
 namespace tmms
 {
@@ -10,12 +12,13 @@ namespace tmms
     {
         struct LogInfo
         {
-            std::string level;
+            LogLevel level;
             std::string path;
             std::string name;
+            RotateType rotate_type{kRotateNone};
         };
         using LogInfoPtr = std::shared_ptr<LogInfo>;
-        
+
         class Config
         {
           public:
@@ -23,13 +26,14 @@ namespace tmms
             ~Config() = default;
 
             bool LoadConfig(const std::string &file);
-            bool ParseLogInfo(const Json::Value &root);
             LogInfoPtr &GetLogInfo();
 
             std::string name_;
             int32_t cpu_start_{0};
-            int32_t thread_num_{1};
+            int32_t thread_nums_{1};
+
           private:
+            bool ParseLogInfo(const Json::Value &root);
             LogInfoPtr log_info_;
         };
     } // namespace base
