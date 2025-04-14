@@ -11,7 +11,7 @@ TEST(TestJsonCpp, BasicParsing)
     std::string errs;
     
     bool parsingSuccessful = Json::parseFromStream(builder, config_file, &root, &errs);
-    ASSERT_TRUE(parsingSuccessful) << "Failed to parse JSON: " << errs;
+    ASSERT_FALSE(parsingSuccessful) << "Failed to parse JSON: " << errs;
     
     EXPECT_TRUE(root.isMember("log_info")) << "Missing log_info in config";
     

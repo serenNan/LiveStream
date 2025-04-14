@@ -16,6 +16,7 @@ int main(int argc, const char **argv)
     if (!sConfigManager->LoadConfig("../bin/config/config.json"))
     {
         std::cerr << "Failed to load config" << std::endl;
+        return -1;
     }
     ConfigPtr config = sConfigManager->GetConfig();
     LogInfoPtr log_info = config->GetLogInfo();

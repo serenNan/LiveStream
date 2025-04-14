@@ -5,10 +5,10 @@
             "name": "构建并调试",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/LiveStreaming",  
+            "program": "${workspaceFolder}/build/LiveStreaming",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/build",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -19,12 +19,16 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "build",  // 添加构建任务
-            "miDebuggerPath": "/usr/bin/gdb",  // 修改为你的gdb路径
+            "preLaunchTask": "build",
+            "miDebuggerPath": "/usr/bin/gdb",
             "logging": {
                 "trace": true,
                 "traceResponse": true,
                 "engineLogging": true
+            },
+            // 新增配置项
+            "sourceFileMap": {
+                "/build": "${workspaceFolder}/build"
             }
         }
     ]
