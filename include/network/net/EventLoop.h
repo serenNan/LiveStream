@@ -10,9 +10,6 @@ namespace tmms
     {
         using EventPtr = std::shared_ptr<Event>;
         /**
-         * @brief 事件循环类，负责管理epoll事件和IO事件分发
-         */
-        /**
          * @brief 事件循环类
          * 基于epoll实现的事件循环，负责管理IO事件的分发和处理
          */

@@ -23,4 +23,5 @@ add_executable(LiveStreaming ${SOURCE})
 # 确保主程序链接了base库和jsoncpp库
 target_link_libraries(LiveStreaming PRIVATE 
     base
+    network
 )

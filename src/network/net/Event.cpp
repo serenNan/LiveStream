@@ -3,6 +3,12 @@
 #include <unistd.h>
 
 using namespace tmms::network;
+
+Event::Event(EventLoop *loop): loop_(loop)
+{
+    
+}
+
 Event::Event(EventLoop *loop, int fd) : loop_(loop), fd_(fd)
 {
 }
@@ -24,6 +30,8 @@ bool Event::EnableWriting(bool enable)
 {
     return loop_->EnableEventWriting(shared_from_this(), enable);
 }
+
 int Event::Fd() const
 {
+    return fd_;
 }

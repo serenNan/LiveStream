@@ -33,26 +33,32 @@ namespace tmms
             Event(EventLoop *loop, int fd);
 
             /**
+             * @brief 构造函数
+             * @param loop 所属的事件循环
+             */
+            Event(EventLoop *loop);
+
+            /**
              * @brief 读事件回调(纯虚函数)
              * 当文件描述符可读时被调用
              */
-            virtual void OnRead() = 0;
+            virtual void OnRead() {};
             /**
              * @brief 写事件回调
              * 当文件描述符可写时被调用
              */
-            virtual void OnWrite();
+            virtual void OnWrite(){};
             /**
              * @brief 关闭事件回调
              * 当连接关闭时被调用
              */
-            virtual void OnClose();
+            virtual void OnClose(){};
             /**
              * @brief 错误事件回调
              * @param message 错误信息
              * 当发生错误时被调用
              */
-            virtual void OnError(const std::string &message);
+            virtual void OnError(const std::string &message){};
             /**
              * @brief 启用/禁用读事件
              * @param enable 是否启用
@@ -71,7 +77,7 @@ namespace tmms
              */
             int Fd() const;
 
-          private:
+          protected:
             EventLoop *loop_{nullptr}; ///< 所属的事件循环
             int fd_{-1};               ///< 关联的文件描述符
             int events_{0};           ///< 当前关注的事件标志

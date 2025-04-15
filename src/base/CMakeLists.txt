@@ -1,16 +1,5 @@
 # Base目录的CMake配置
-set(BASE_SOURCE
-    TTime.cpp
-    StringUtils.cpp
-    Task.cpp
-    TaskManager.cpp
-    Logger.cpp
-    LogStream.cpp
-    FileLog.cpp
-    FileLogManager.cpp
-    Config.cpp
-    ConfigManager.cpp
-)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} BASE_SOURCE)
 
 add_library(base ${BASE_SOURCE})
 

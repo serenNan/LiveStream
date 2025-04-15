@@ -1,7 +1,9 @@
 # Base目录的CMake配置
-set(NETWORK_SOURCE
-    net/EventLoop.cpp
-)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} NETWORK_SOURCE)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/net NETWORK_SOURCE)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/base NETWORK_SOURCE)
+
+# message(STATUS "NETWORK_SOURCE: ${NETWORK_SOURCE}")
 
 add_library(network ${NETWORK_SOURCE})
 

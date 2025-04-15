@@ -108,3 +108,12 @@ std::shared_ptr<Event>& event = iter->second; // 直接引用原对象
    - 在异步编程中要特别注意线程安全问题
 
 在你的代码中，这种写法可以高效地获取并可能修改events_ map中存储的Event对象。
+
+## lamda表达式
+
+对应代码：[EventLoopThread.cpp](../src/network/net/EventLoopThread.cpp)
+```cpp
+[this](){StartEventLoop();}
+```
+
+传一个`this`指针，然后在lamda表达式中调用私有成员函数`StartEventLoop()`
