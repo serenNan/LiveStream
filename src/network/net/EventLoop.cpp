@@ -1,16 +1,20 @@
 #include "EventLoop.h"
 #include "Event.h"
 #include "NetWork.h"
+#include "PipeEvent.h"
+#include "TTime.h"
 #include <asm-generic/socket.h>
+#include <cstdint>
 #include <cstring>
 #include <fcntl.h>
+#include <iostream>
+#include <mutex>
 #include <sys/epoll.h>
 #include <sys/socket.h>
 #include <unistd.h>
-
 using namespace tmms::network;
 
-static thread_local EventLoop *t_local_eventloop = nullptr;
+static thread_local EventLoop *t_local_eventloop = nullptr; ///< 线程局部存储的事件循环指针
 EventLoop::EventLoop() : epoll_fd_(::epoll_create(1024)), epoll_events_(1024)
 {
     if (t_local_eventloop)
@@ -28,13 +32,14 @@ EventLoop::~EventLoop()
 
 void EventLoop::Loop()
 {
-    memset(&epoll_events_[0], 0x00, sizeof(struct epoll_event) * epoll_events_.size());
     lopping_ = true;
+    int64_t timeout = 1000;
     while (lopping_)
     {
+        memset(&epoll_events_[0], 0x00, sizeof(struct epoll_event) * epoll_events_.size());
         int ret = ::epoll_wait(epoll_fd_, (struct epoll_event *)&epoll_events_[0],
-                                static_cast<int>(epoll_events_.size()), -1);
-        if (ret > 0)
+                               static_cast<int>(epoll_events_.size()), timeout);
+        if (ret >= 0)
         {
             for (int i = 0; i < ret; ++i)
             {
@@ -74,10 +79,9 @@ void EventLoop::Loop()
                 // 如果事件数量达到上限，扩大容器
                 epoll_events_.resize(epoll_events_.size() * 2);
             }
-        }
-        else if (ret == 0)
-        {
-            NETWORK_ERROR << "epoll wait timeout";
+            RunFunctions();
+            int64_t now = tmms::base::TTime::NowMS();
+            wheel_.OnTimer(now);
         }
         else if (ret < 0)
         {
@@ -174,4 +178,133 @@ bool EventLoop::EnableEventWriting(const EventPtr &event, bool enable)
     ev.data.fd = event->Fd();
     epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, event->fd_, &ev);
     return true;
+}
+
+void EventLoop::AssertInLoopThread()
+{
+    if (!IsInLoopThread())
+    {
+        NETWORK_ERROR << "EventLoop is not in loop thread.";
+        exit(-1);
+    }
+}
+
+bool EventLoop::IsInLoopThread() const
+{
+    return t_local_eventloop == this;
+}
+
+void EventLoop::RunInLoop(const Func &func)
+{
+    if (IsInLoopThread())
+    {
+        func();
+    }
+    else
+    {
+        std::lock_guard<std::mutex> lk(lock_);
+        functions_.push(func);
+
+        WakeUp();
+    }
+}
+
+void EventLoop::RunInLoop(Func &&func)
+{
+    if (IsInLoopThread())
+    {
+        func();
+    }
+    else
+    {
+        std::lock_guard<std::mutex> lk(lock_);
+        functions_.push(std::move(func));
+
+        WakeUp();
+    }
+}
+
+void EventLoop::RunFunctions()
+{
+    std::lock_guard<std::mutex> lk(lock_);
+    while (!functions_.empty())
+    {
+        auto &func = functions_.front();
+        func();
+        functions_.pop();
+    }
+}
+
+void EventLoop::WakeUp()
+{
+    if (!pipe_event_)
+    {
+        pipe_event_ = std::make_shared<PipeEvent>(this);
+        AddEvent(pipe_event_);
+    }
+    int64_t tmp = 1;
+    pipe_event_->Write((const char *)&tmp, sizeof(tmp));
+}
+
+void EventLoop::InsertEntry(uint32_t delay, EntryPtr entryPty)
+{
+    if (IsInLoopThread())
+    {
+        wheel_.InsertEntry(delay, entryPty);
+    }
+    else
+    {
+        RunInLoop([this, delay, entryPty]() { wheel_.InsertEntry(delay, entryPty); });
+    }
+}
+
+void EventLoop::RunAfter(double delay, const Func &cb)
+{
+    if (IsInLoopThread())
+    {
+        wheel_.RunAfter(delay, cb);
+    }
+    else
+    {
+        RunInLoop([this, delay, cb]() { wheel_.RunAfter(delay, cb); });
+    }
+}
+
+void EventLoop::RunAfter(double delay, Func &&cb)
+{
+    if (IsInLoopThread())
+    {
+        wheel_.RunAfter(delay, cb);
+    }
+    else
+    {
+        RunInLoop([this, delay, cb]() { wheel_.RunAfter(delay, cb); });
+    }
+}
+
+void EventLoop::RunEvery(double interval, const Func &cb)
+{
+    if (IsInLoopThread())
+    {
+        wheel_.RunEvery(interval, cb);
+    }
+    else
+    {
+        RunInLoop([this, interval, cb]() { wheel_.RunEvery(interval, cb); });
+    }
+}
+
+void EventLoop::RunEvery(double interval, Func &&cb)
+{
+    if (IsInLoopThread())
+    {
+        std::cout << "111111111111" << std::endl;
+
+        wheel_.RunEvery(interval, cb);
+    }
+    else
+    {
+        std::cout << "22222222222222" << std::endl;
+        RunInLoop([this, interval, cb]() { wheel_.RunEvery(interval, cb); });
+    }
 }

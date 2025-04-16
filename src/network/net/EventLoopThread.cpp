@@ -30,7 +30,7 @@ void EventLoopThread::Run()
             running = true;
             condition_.notify_all();
         }
-        auto f = promise_loop_.get_future();
+        std::future<int> f = promise_loop_.get_future();
         f.get();
     });
 }
