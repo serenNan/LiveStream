@@ -298,13 +298,10 @@ void EventLoop::RunEvery(double interval, Func &&cb)
 {
     if (IsInLoopThread())
     {
-        std::cout << "111111111111" << std::endl;
-
         wheel_.RunEvery(interval, cb);
     }
     else
     {
-        std::cout << "22222222222222" << std::endl;
         RunInLoop([this, interval, cb]() { wheel_.RunEvery(interval, cb); });
     }
 }

@@ -1,5 +1,5 @@
-#include "Singleton.h"
 #include "NonCopyable.h"
+#include "Singleton.h"
 #include "gtest/gtest.h"
 #include <iostream>
 
@@ -13,7 +13,7 @@ class A : public NonCopyable
     void print()
     {
         std::cout << "A::print()" << std::endl;
-      }
+    }
 };
 
 #define sA Singleton<A>::Instance()
@@ -22,5 +22,3 @@ TEST(TestSingleton, BasicTest)
 {
     sA->print();
 }
-
-

@@ -3,7 +3,8 @@
 
 using namespace tmms::network;
 
-TEST(InetAddressTest, IPv4Parsing) {
+TEST(TestInetAddress, IPv4Parsing)
+{
     InetAddress addr("192.168.1.1");
     EXPECT_EQ(addr.IP(), "192.168.1.1");
     EXPECT_TRUE(addr.IsLanIp());
@@ -11,7 +12,8 @@ TEST(InetAddressTest, IPv4Parsing) {
     EXPECT_FALSE(addr.IsLoopbackIp());
 }
 
-TEST(InetAddressTest, IPv6Parsing) {
+TEST(TestInetAddress, IPv6Parsing)
+{
     InetAddress addr("172.1.1.1");
     EXPECT_EQ(addr.IP(), "172.1.1.1");
     EXPECT_FALSE(addr.IsLanIp());
@@ -19,13 +21,15 @@ TEST(InetAddressTest, IPv6Parsing) {
     EXPECT_FALSE(addr.IsLoopbackIp());
 }
 
-TEST(InetAddressTest, Loopback) {
+TEST(TestInetAddress, Loopback)
+{
     InetAddress addr("127.0.0.1");
     EXPECT_TRUE(addr.IsLoopbackIp());
     EXPECT_FALSE(addr.IsWanIp());
 }
 
-TEST(InetAddressTest, PortHandling) {
+TEST(TestInetAddress, PortHandling)
+{
     InetAddress addr("192.168.1.1:8080");
     EXPECT_EQ(addr.Port(), 8080);
 }

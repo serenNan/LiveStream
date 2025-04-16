@@ -1,6 +1,6 @@
-#include "TaskManager.h"
 #include "TTime.h"
 #include "Task.h"
+#include "TaskManager.h"
 #include "gtest/gtest.h"
 #include <chrono>
 #include <iostream>
@@ -12,7 +12,10 @@ using namespace tmms::base;
 void TestTask()
 {
     TaskPtr task1 = std::make_shared<Task>(
-        [](const TaskPtr &task) { std::cout << "TestTask1 " << " now:" << TTime::ISOTime()<<std::endl; }, 1000);
+        [](const TaskPtr &task) {
+            std::cout << "TestTask1 " << " now:" << TTime::ISOTime() << std::endl;
+        },
+        1000);
     TaskPtr task2 = std::make_shared<Task>(
         [](const TaskPtr &task) {
             std::cout << "TestTask2" << "now:" << TTime::ISOTime() << std::endl;
@@ -40,7 +43,7 @@ void TestTask()
 TEST(TestTaskManager, BasicFunctionality)
 {
     TestTask();
-    for (int i = 0; i < 10; ++i) 
+    for (int i = 0; i < 10; ++i)
     {
         sTaskManager->OnWork();
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
