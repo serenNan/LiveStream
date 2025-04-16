@@ -78,12 +78,12 @@ void TestEventLoopThreadPool()
     }
 }
 
-int main(int argc, const char **argv)
-{
-    TestEventLoopThreadPool();
-    while (1)
-    {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
-    return 0;
-}
+// int main(int argc, const char **argv)
+// {
+//     TestEventLoopThreadPool();
+//     while (1)
+//     {
+//         std::this_thread::sleep_for(std::chrono::seconds(1));
+//     }
+//     return 0;
+// }
