@@ -5,7 +5,7 @@
 
 using namespace tmms::network;
 
-void TestClien()
+void TestClient()
 {
     int sock = SocketOpt::CreateNonBlockingTcpSocket(AF_INET);
     if (sock < 0)
