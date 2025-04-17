@@ -30,6 +30,15 @@ TEST(TestInetAddress, Loopback)
 
 TEST(TestInetAddress, PortHandling)
 {
-    InetAddress addr("192.168.1.1:8080");
-    EXPECT_EQ(addr.Port(), 8080);
+    // 测试普通IPv4地址带端口
+    InetAddress addr1("192.168.1.1:8080");
+    EXPECT_EQ(addr1.Port(), 8080);
+    
+    // 测试IPv6地址带端口（如果有需要）
+    InetAddress addr2("[2001:db8::1]:8080");
+    EXPECT_EQ(addr2.Port(), 8080);
+    
+    // 测试无端口情况
+    InetAddress addr3("192.168.1.1");
+    EXPECT_EQ(addr3.Port(), 0);  // 假设无端口时返回0
 }

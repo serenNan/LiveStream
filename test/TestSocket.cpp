@@ -46,8 +46,8 @@ void TestServer()
               << " addr:" << addr.ToIpPort() << std::endl;
 }
 
-int main()
-{
-    TestServer();
-    return 0;
-}
+// int main()
+// {
+//     TestServer();
+//     return 0;
+// }

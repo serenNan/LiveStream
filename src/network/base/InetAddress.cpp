@@ -108,7 +108,7 @@ void InetAddress::GetSockAddr(struct sockaddr *saddr) const
     memset(addr_in, 0x00, sizeof(struct sockaddr_in));
     addr_in->sin_family = AF_INET;
     addr_in->sin_port = htons(std::atoi(port_.c_str()));
-    if (::inet_pton(AF_INET6, addr_.c_str(), &addr_in->sin_addr) < 0)
+    if (::inet_pton(AF_INET, addr_.c_str(), &addr_in->sin_addr) < 0)
     {
         NETWORK_ERROR << "ipv4 ip:" << addr_ << "convert error";
     }
