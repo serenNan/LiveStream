@@ -57,7 +57,7 @@ namespace tmms
 
             /**
              * @brief 接受新连接
-             * @param peeraddr 输出参数，保存对端地址
+             * @param peeraddr 输出参数，新的客户端地址
              * @return 成功返回新连接的socket文件描述符，失败返回-1
              */
             int Accept(InetAddress *peeraddr);

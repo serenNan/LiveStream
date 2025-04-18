@@ -1,0 +1,118 @@
+#include "Acceptor.h"
+#include "InetAddress.h"
+#include "NetWork.h"
+#include "SocketOpt.h"
+#include <cerrno>
+#include <memory>
+#include <sys/socket.h>
+#include <unistd.h>
+
+using namespace tmms::network;
+
+Acceptor::Acceptor(EventLoop *loop, const InetAddress &addr) : Event(loop), addr_(addr)
+{
+}
+
+Acceptor::~Acceptor()
+{
+    Stop();
+    if (socket_opt_ == nullptr)
+    {
+        delete socket_opt_;
+        socket_opt_ = nullptr;
+    }
+}
+
+void Acceptor::setAcceptCallback(const AcceptCallback &cb)
+{
+    accept_cb_ = cb;
+}
+
+void Acceptor::setAcceptCallback(AcceptCallback &&cb)
+{
+    accept_cb_ = std::move(cb);
+}
+
+void Acceptor::Open()
+{
+    if (fd_ > 0)
+    {
+        ::close(fd_);
+        fd_ = -1;
+    }
+    if (addr_.IsIPV6())
+    {
+        fd_ = SocketOpt::CreateNonBlockingTcpSocket(AF_INET6);
+    }
+    else
+    {
+        fd_ = SocketOpt::CreateNonBlockingTcpSocket(AF_INET);
+    }
+    if (fd_ < 0)
+    {
+        NETWORK_ERROR << "socket failed.errno:" << errno;
+        exit(-1);
+    }
+    if (socket_opt_ == nullptr)
+    {
+        delete socket_opt_;
+        socket_opt_ = nullptr;
+    }
+    loop_->AddEvent(std::dynamic_pointer_cast<Acceptor>(shared_from_this()));
+    socket_opt_ = new SocketOpt(fd_);
+    socket_opt_->SetReuseAddr(true);
+    socket_opt_->SetReusePort(true);
+    socket_opt_->BindAddress(addr_);
+    socket_opt_->Listen();
+}
+
+void Acceptor::Start()
+{
+    loop_->RunInLoop([this]() { Open(); });
+}
+
+void Acceptor::Stop()
+{
+    loop_->DelEvent(std::dynamic_pointer_cast<Acceptor>(shared_from_this()));
+}
+
+void Acceptor::OnRead()
+{
+    if (!socket_opt_)
+    {
+        return;
+    }
+    while (true)
+    {
+        InetAddress addr;
+        auto sock = socket_opt_->Accept(&addr);
+        if (sock > 0)
+        {
+            if (accept_cb_)
+            {
+                accept_cb_(sock, addr);
+            }
+            else
+            {
+                if (errno != EINTR && errno != EAGAIN)
+                {
+                    NETWORK_ERROR << "acceptor failed.errno:" << errno;
+                    OnClose();
+                }
+                break;
+            }
+        }
+    }
+}
+
+void Acceptor::OnError(const std::string &msg)
+{
+    NETWORK_ERROR << "acceptor error:" << msg;
+    OnClose();
+}
+
+void Acceptor::OnClose()
+{
+    Stop();
+    Open();
+}

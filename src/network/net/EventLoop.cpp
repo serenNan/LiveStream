@@ -122,7 +122,7 @@ void EventLoop::DelEvent(const EventPtr &event)
     events_.erase(iter);
 
     struct epoll_event ev;
-    memset(&ev, 0x00, sizeof(struct epoll_event));
+    memset(&ev, 0x00, sizeof(ev));
     ev.events = event->events_;
     ev.data.fd = event->Fd();
     epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, event->fd_, &ev);
