@@ -73,12 +73,9 @@ namespace tmms
  * @brief 警告级别日志宏
  */
 #define LOG_WARN                                                                                   \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kWarn,  \
-                          __FUNCTION__)
+    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kWarn, __FUNCTION__)
 
 /**
  * @brief 错误级别日志宏
  */
-#define LOG_ERROR                                                                                  \
-    tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kError, \
-                          __FUNCTION__)
+#define LOG_ERROR                                                                                tmms::base::LogStream(tmms::base::g_logger, __FILE__, __LINE__, tmms::base::kError, __FUNCTION__)

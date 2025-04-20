@@ -28,6 +28,14 @@ namespace tmms
         {
           public:
             /**
+             * @brief 构造函数，创建一个TCP服务器实例
+             * @param loop 事件循环指针，用于处理网络IO事件
+             * @param addr 监听地址，包含IP和端口信息
+             * @note 服务器创建后需要调用Start()方法开始监听
+             */
+            TcpServer(EventLoop *loop, const InetAddress &addr);
+
+            /**
              * @brief 设置新连接回调函数
              * @param cb 回调函数，当有新连接建立时触发
              */

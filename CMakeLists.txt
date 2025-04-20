@@ -14,7 +14,7 @@ set(SOURCE
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/base)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/network)
-add_subdirectory(${CMAKE_SOURCE_DIR}/test)
+add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
 
 
 add_executable(LiveStreaming ${SOURCE})
