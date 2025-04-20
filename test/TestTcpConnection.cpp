@@ -28,7 +28,6 @@ int main()
         acceptor->SetAcceptCallback([&loop, &server, &list](int fd, const InetAddress &addr) {
             std::cout << "host: " << addr.ToIpPort() << std::endl;
             TcpConnectionPtr connection = std::make_shared<TcpConnection>(loop, fd, server, addr);
-            loop->AddEvent(connection);
             connection->SetRecMsgCallback([](const TcpConnectionPtr &con, MsgBuffer &buff) {
                 std::cout << "recv msg: " << buff.Peek() << std::endl;
                 buff.RetrieveAll();
@@ -41,7 +40,7 @@ int main()
                 con->ForceClose();
             });
 
-
+            loop->AddEvent(connection);
             list.push_back(connection);
         });
 

@@ -7,7 +7,6 @@
 #include <cstdint>
 #include <cstring>
 #include <fcntl.h>
-#include <iostream>
 #include <mutex>
 #include <sys/epoll.h>
 #include <sys/socket.h>
@@ -85,7 +84,11 @@ void EventLoop::Loop()
         }
         else if (ret < 0)
         {
-            NETWORK_ERROR << "epoll wait error.error:" << errno;
+            if (errno == EINTR) {
+                continue;  // 被信号中断，继续循环
+            }
+            NETWORK_ERROR << "epoll wait error.error:" << errno << " msg:" << strerror(errno);
+            // 其他错误可能需要处理
         }
     }
 }
@@ -137,7 +140,8 @@ bool EventLoop::EnableEventReading(const EventPtr &event, bool enable)
     auto iter = events_.find(event->Fd());
     if (iter == events_.end())
     {
-        NETWORK_ERROR << "event fd:" << event->Fd() << " not exist";
+        NETWORK_ERROR << "event fd:" << event->Fd() << " not exist, enable:" << enable 
+                     << ", events size:" << events_.size();
         return false;
     }
 

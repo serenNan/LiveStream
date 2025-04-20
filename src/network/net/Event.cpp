@@ -12,14 +12,6 @@ Event::Event(EventLoop *loop): loop_(loop)
 Event::Event(EventLoop *loop, int fd) : loop_(loop), fd_(fd)
 {
 }
-Event::~Event()
-{
-    if (fd_ > 0)
-    {
-        ::close(fd_);
-        fd_ = -1;
-    }
-}
 
 bool Event::EnableReading(bool enable)
 {
@@ -44,4 +36,9 @@ void Event::Close()
         ::close(fd_);
         fd_ = -1;
     }
+}
+
+Event::~Event()
+{
+    OnClose();
 }

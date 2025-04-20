@@ -1,7 +1,7 @@
 #include "TcpConnection.h"
 #include "base/NetWork.h"
 #include <cerrno>
-#include <iostream>
+#include <fcntl.h>
 #include <memory>
 #include <sys/uio.h>
 #include <unistd.h>
@@ -12,7 +12,6 @@ TcpConnection::TcpConnection(EventLoop *loop, int socketfd, const InetAddress &l
                              const InetAddress &peerAddr)
     : Connection(loop, socketfd, localAddr, peerAddr)
 {
-    std::cout << "TcpConnection Constructor" << std::endl;
 }
 
 TcpConnection::~TcpConnection()
@@ -40,8 +39,8 @@ void TcpConnection::OnClose()
             close_cb_(std::dynamic_pointer_cast<TcpConnection>(shared_from_this()));
         }
         close_ = true;
+        Event::Close();
     }
-    Event::Close();
 }
 
 void TcpConnection::ForceClose()
@@ -56,13 +55,11 @@ void TcpConnection::SetRecMsgCallback(const MessageCallback &cb)
 
 void TcpConnection::SetRecMsgCallback(MessageCallback &&cb)
 {
-    std::cout << "SetRecMsgCallback" << std::endl;
     message_cb_ = std::move(cb);
 }
 
 void TcpConnection::OnRead()
 {
-    std::cout << "TcpOnRead" << std::endl;
     if (close_)
     {
         NETWORK_ERROR << "host:" << peer_addr_.ToIpPort() << " had closed.";
@@ -77,15 +74,10 @@ void TcpConnection::OnRead()
         auto ret = message_buffer_.ReadFd(fd_, &err);
         if (ret > 0)
         {
-            std::cout << "Read " << ret << " bytes from socket" << std::endl;
             if (message_cb_)
             {
                 message_cb_(std::dynamic_pointer_cast<TcpConnection>(shared_from_this()),
                             message_buffer_);
-            }
-            else
-            {
-                std::cout << "Message callback is null" << std::endl;
             }
         }
         else if (ret == 0)
@@ -123,7 +115,6 @@ void TcpConnection::SetWriteCompleteCallback(WriteCompleteCallback &&cb)
 
 void TcpConnection::OnWrite()
 {
-    std::cout << "TcpOnWrite" << std::endl;
     if (close_)
     {
         NETWORK_TRACE << "host:" << peer_addr_.ToIpPort() << " had closed.";

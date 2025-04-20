@@ -25,7 +25,7 @@ int SocketOpt::CreateNonBlockingTcpSocket(int family)
 
 int SocketOpt::CreateNonBlockingUdpSocket(int family)
 {
-    int sock = ::socket(family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_UDP);
+    int sock = ::socket(family, SOCK_DGRAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_UDP);
     if (sock < 0)
     {
         NETWORK_ERROR << "socket failed.";

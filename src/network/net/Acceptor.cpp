@@ -92,15 +92,15 @@ void Acceptor::OnRead()
             {
                 accept_cb_(sock, addr);
             }
-            else
+        }
+        else
+        {
+            if (errno != EINTR && errno != EAGAIN)
             {
-                if (errno != EINTR && errno != EAGAIN)
-                {
-                    NETWORK_ERROR << "acceptor failed.errno:" << errno;
-                    OnClose();
-                }
-                break;
+                NETWORK_ERROR << "acceptor failed.errno:" << errno;
+                OnClose();
             }
+            break;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace tmms
             void WriteLog(const std::string &message);
 
           private:
-            LogLevel level_{kDebug}; ///< 当前日志级别，默认为调试级别
+            LogLevel level_{kTrace}; ///< 当前日志级别，默认为调试级别
             FileLogPtr log_;         ///< 日志文件对象指针
         };
     } // namespace base
