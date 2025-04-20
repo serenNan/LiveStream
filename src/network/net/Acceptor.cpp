@@ -16,19 +16,19 @@ Acceptor::Acceptor(EventLoop *loop, const InetAddress &addr) : Event(loop), addr
 Acceptor::~Acceptor()
 {
     Stop();
-    if (socket_opt_ == nullptr)
+    if (socket_opt_)
     {
         delete socket_opt_;
         socket_opt_ = nullptr;
     }
 }
 
-void Acceptor::setAcceptCallback(const AcceptCallback &cb)
+void Acceptor::SetAcceptCallback(const AcceptCallback &cb)
 {
     accept_cb_ = cb;
 }
 
-void Acceptor::setAcceptCallback(AcceptCallback &&cb)
+void Acceptor::SetAcceptCallback(AcceptCallback &&cb)
 {
     accept_cb_ = std::move(cb);
 }
@@ -53,7 +53,7 @@ void Acceptor::Open()
         NETWORK_ERROR << "socket failed.errno:" << errno;
         exit(-1);
     }
-    if (socket_opt_ == nullptr)
+    if (socket_opt_)
     {
         delete socket_opt_;
         socket_opt_ = nullptr;

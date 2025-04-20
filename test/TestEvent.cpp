@@ -8,8 +8,8 @@
 #include "gtest/gtest.h"
 using namespace tmms::network;
 
-EventLoopThread eventloop_thread;
-std::thread th;
+// EventLoopThread eventloop_thread;
+// std::thread th;
 
 TEST(TestEventLoop, BasicThreadTest)
 {

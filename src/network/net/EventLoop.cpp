@@ -59,7 +59,7 @@ void EventLoop::Loop()
                     int error = 0;
                     socklen_t len = sizeof(error);
                     getsockopt(event->Fd(), SOL_SOCKET, SO_ERROR, &error, &len);
-                    event->OnError(std::string(strerror(error)));
+                    event->OnError((strerror(error)));
                 }
                 else if ((ev.events & EPOLLHUP) && !(ev.events & EPOLLIN))
                 {
@@ -108,8 +108,12 @@ void EventLoop::AddEvent(const EventPtr &event)
     struct epoll_event ev;
     memset(&ev, 0x00, sizeof(struct epoll_event));
     ev.events = event->events_;
-    ev.data.fd = event->Fd();
-    epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, event->fd_, &ev);
+    ev.data.fd = event->fd_;
+    if (epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, event->fd_, &ev) == -1)
+    {
+        NETWORK_ERROR << "epoll_ctl add error: " << strerror(errno);
+        exit(-1);
+    }
 }
 
 void EventLoop::DelEvent(const EventPtr &event)
@@ -149,7 +153,7 @@ bool EventLoop::EnableEventReading(const EventPtr &event, bool enable)
     struct epoll_event ev;
     memset(&ev, 0x00, sizeof(struct epoll_event));
     ev.events = event->events_;
-    ev.data.fd = event->Fd();
+    ev.data.fd = event->fd_;
     epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, event->fd_, &ev);
     return true;
 }

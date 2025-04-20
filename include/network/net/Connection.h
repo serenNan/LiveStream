@@ -26,7 +26,7 @@ namespace tmms
         class Connection; ///< Connection类前向声明
         using ConnectionPtr =
             std::shared_ptr<Connection>; ///< Connection智能指针类型，用于管理Connection对象生命周期
-        using ActiveCallback = std::function<void(ConnectionPtr)>;
+        using ActiveCallback = std::function<void(const ConnectionPtr&)>;
         /**
          * @brief 网络连接基类，继承自Event
          * 封装了网络连接的基本操作和状态管理
@@ -96,7 +96,7 @@ namespace tmms
                 {
                     return std::dynamic_pointer_cast<T>(iter->second);
                 }
-                return std::shared_ptr<T>(nullptr);
+                return std::shared_ptr<T>();
             }
             /**
              * @brief 清除指定类型的上下文
@@ -136,11 +136,13 @@ namespace tmms
              */
             virtual void ForceClose() = 0;
 
+          protected:
+            InetAddress local_addr_; ///< 本地地址
+            InetAddress peer_addr_;  ///< 对端地址
+
           private:
             std::unordered_map<int, ContextPtr> contexts_; ///< 上下文存储映射表
             ActiveCallback active_cb_;                     ///< 活动状态回调函数
-            InetAddress local_addr_;                       ///< 本地地址
-            InetAddress peer_addr_;                        ///< 对端地址
             std::atomic<bool> active_{false};              ///< 连接是否处于活动状态
         };
     } // namespace network

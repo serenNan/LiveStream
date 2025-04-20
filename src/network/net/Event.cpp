@@ -35,3 +35,13 @@ int Event::Fd() const
 {
     return fd_;
 }
+
+void Event::Close()
+{
+    // 文件描述符大于 0 ，关闭并恢复初始化值
+    if (fd_ > 0)
+    {
+        ::close(fd_);
+        fd_ = -1;
+    }
+}

@@ -34,13 +34,13 @@ namespace tmms
              * @brief 设置接受新连接的回调函数
              * @param cb 回调函数
              */
-            void setAcceptCallback(const AcceptCallback &cb);
-            
+            void SetAcceptCallback(const AcceptCallback &cb);
+
             /**
              * @brief 设置接受新连接的回调函数（移动语义）
              * @param cb 回调函数
              */
-            void setAcceptCallback(AcceptCallback &&cb);
+            void SetAcceptCallback(AcceptCallback &&cb);
 
             /**
              * @brief 开始监听

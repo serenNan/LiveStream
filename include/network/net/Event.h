@@ -81,6 +81,8 @@ namespace tmms
              */
             int Fd() const;
 
+            void Close();
+
           protected:
             EventLoop *loop_{nullptr}; ///< 所属的事件循环
             int fd_{-1};               ///< 关联的文件描述符

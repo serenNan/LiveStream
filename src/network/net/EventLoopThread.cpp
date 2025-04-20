@@ -1,5 +1,6 @@
 #include "EventLoopThread.h"
 #include "EventLoop.h"
+#include <iostream>
 #include <mutex>
 
 using namespace tmms::network;
@@ -27,8 +28,8 @@ void EventLoopThread::Run()
     std::call_once(once_, [this]() {
         {
             std::lock_guard<std::mutex> lk(lock_);
-            running = true;
-            condition_.notify_all();
+            running_ = true;
+            condition_.notify_one();
         }
         std::future<int> f = promise_loop_.get_future();
         f.get();
@@ -45,7 +46,7 @@ void EventLoopThread::StartEventLoop()
     EventLoop loop;
 
     std::unique_lock<std::mutex> lk(lock_);
-    condition_.wait(lk, [this] { return running; });
+    condition_.wait(lk, [this] { return running_; });
     loop_ = &loop;
     promise_loop_.set_value(1);
     loop.Loop();
