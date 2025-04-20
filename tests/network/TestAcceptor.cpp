@@ -18,7 +18,7 @@ using namespace tmms::network;
 //     {
 //         InetAddress server("172.17.0.1:34444");
 //         std::shared_ptr<Acceptor> acceptor = std::make_shared<Acceptor>(loop, server);
-//         acceptor->setAcceptCallback([](int fd, const InetAddress &addr) {
+//         acceptor->SetAcceptCallback([](int fd, const InetAddress &addr) {
 //             std::cout << "连接成功 host:" << addr.ToIpPort() << std::endl;
 //         });
 //         acceptor->Start();
