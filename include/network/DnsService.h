@@ -1,7 +1,7 @@
 #pragma once
 #include "SocketOpt.h"
 #include "base/NonCopyable.h"
-#include "base/Singleton.h"
+#include <base/Singleton.h>
 #include "network/base/InetAddress.h"
 #include <cstdint>
 #include <memory>
@@ -101,6 +101,7 @@ namespace tmms
             int32_t sleep_{200};           ///< 重试间隔时间(毫秒)
             int32_t interval_{180 * 1000}; ///< 定时更新间隔(毫秒)
         };
+// 获取DnsService单例实例的宏定义
 #define sDnsService tmms::base::Singleton<tmms::network::DnsService>::Instance()
     } // namespace network
 } // namespace tmms
