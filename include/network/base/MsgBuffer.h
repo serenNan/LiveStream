@@ -16,22 +16,21 @@ namespace tmms
         static constexpr char CRLF[]{"\r\n"};
 
         /**
-         * @brief This class represents a memory buffer used for sending and receiving
-         * data.
+         * @brief 该类表示用于发送和接收数据的内存缓冲区。
          *
          */
         class MsgBuffer
         {
           public:
             /**
-             * @brief Construct a new message buffer instance.
+             * @brief 构造一个新的消息缓冲区实例。
              *
-             * @param len The initial size of the buffer.
+             * @param len 缓冲区的初始大小。
              */
             MsgBuffer(size_t len = kBufferDefaultLength);
 
             /**
-             * @brief Get the beginning of the buffer.
+             * @brief 获取缓冲区的起始位置。
              *
              * @return const char*
              */
@@ -41,7 +40,7 @@ namespace tmms
             }
 
             /**
-             * @brief Get the end of the buffer where new data can be written.
+             * @brief 获取缓冲区中可以写入新数据的末尾位置。
              *
              * @return const char*
              */
@@ -49,13 +48,19 @@ namespace tmms
             {
                 return begin() + tail_;
             }
+
+            /**
+             * @brief 获取缓冲区中可以写入新数据的末尾位置。
+             *
+             * @return const char*
+             */
             char *BeginWrite()
             {
                 return begin() + tail_;
             }
 
             /**
-             * @brief Get a byte value from the buffer.
+             * @brief 从缓冲区获取一个字节值。
              *
              * @return uint8_t
              */
@@ -66,28 +71,28 @@ namespace tmms
             }
 
             /**
-             * @brief Get a unsigned short value from the buffer.
+             * @brief 从缓冲区获取一个无符号短整型值。
              *
              * @return uint16_t
              */
             uint16_t PeekInt16() const;
 
             /**
-             * @brief Get a unsigned int value from the buffer.
+             * @brief 从缓冲区获取一个无符号整型值。
              *
              * @return uint32_t
              */
             uint32_t PeekInt32() const;
 
             /**
-             * @brief Get a unsigned int64 value from the buffer.
+             * @brief 从缓冲区获取一个无符号长整型值。
              *
              * @return uint64_t
              */
             uint64_t PeekInt64() const;
 
             /**
-             * @brief Get and remove some bytes from the buffer.
+             * @brief 从缓冲区获取并移除一些字节。
              *
              * @param len
              * @return std::string
@@ -95,42 +100,42 @@ namespace tmms
             std::string Read(size_t len);
 
             /**
-             * @brief Get the remove a byte value from the buffer.
+             * @brief 从缓冲区获取并移除一个字节值。
              *
              * @return uint8_t
              */
             uint8_t ReadInt8();
 
             /**
-             * @brief Get and remove a unsigned short value from the buffer.
+             * @brief 从缓冲区获取并移除一个无符号短整型值。
              *
              * @return uint16_t
              */
             uint16_t ReadInt16();
 
             /**
-             * @brief Get and remove a unsigned int value from the buffer.
+             * @brief 从缓冲区获取并移除一个无符号整型值。
              *
              * @return uint32_t
              */
             uint32_t ReadInt32();
 
             /**
-             * @brief Get and remove a unsigned int64 value from the buffer.
+             * @brief 从缓冲区获取并移除一个无符号长整型值。
              *
              * @return uint64_t
              */
             uint64_t ReadInt64();
 
             /**
-             * @brief swap the buffer with another.
+             * @brief 与另一个缓冲区交换内容。
              *
              * @param buf
              */
             void Swap(MsgBuffer &buf) noexcept;
 
             /**
-             * @brief Return the size of the data in the buffer.
+             * @brief 返回缓冲区中数据的大小。
              *
              * @return size_t
              */
@@ -140,7 +145,7 @@ namespace tmms
             }
 
             /**
-             * @brief Return the size of the empty part in the buffer
+             * @brief 返回缓冲区中空闲部分的大小
              *
              * @return size_t
              */
@@ -150,7 +155,7 @@ namespace tmms
             }
 
             /**
-             * @brief Append new data to the buffer.
+             * @brief 向缓冲区追加新数据。
              *
              */
             void Append(const MsgBuffer &buf);
@@ -166,7 +171,7 @@ namespace tmms
             }
 
             /**
-             * @brief Append a byte value to the end of the buffer.
+             * @brief 向缓冲区末尾追加一个字节值。
              *
              * @param b
              */
@@ -176,28 +181,28 @@ namespace tmms
             }
 
             /**
-             * @brief Append a unsigned short value to the end of the buffer.
+             * @brief 向缓冲区末尾追加一个无符号短整型值。
              *
              * @param s
              */
             void AppendInt16(const uint16_t s);
 
             /**
-             * @brief Append a unsigned int value to the end of the buffer.
+             * @brief 向缓冲区末尾追加一个无符号整型值。
              *
              * @param i
              */
             void AppendInt32(const uint32_t i);
 
             /**
-             * @brief Appaend a unsigned int64 value to the end of the buffer.
+             * @brief 向缓冲区末尾追加一个无符号长整型值。
              *
              * @param l
              */
             void AppendInt64(const uint64_t l);
 
             /**
-             * @brief Put new data to the beginning of the buffer.
+             * @brief 在缓冲区开头添加新数据。
              *
              * @param buf
              * @param len
@@ -205,7 +210,7 @@ namespace tmms
             void AddInFront(const char *buf, size_t len);
 
             /**
-             * @brief Put a byte value to the beginning of the buffer.
+             * @brief 在缓冲区开头添加一个字节值。
              *
              * @param b
              */
@@ -215,53 +220,52 @@ namespace tmms
             }
 
             /**
-             * @brief Put a unsigned short value to the beginning of the buffer.
+             * @brief 在缓冲区开头添加一个无符号短整型值。
              *
              * @param s
              */
             void AddInFrontInt16(const uint16_t s);
 
             /**
-             * @brief Put a unsigned int value to the beginning of the buffer.
+             * @brief 在缓冲区开头添加一个无符号整型值。
              *
              * @param i
              */
             void AddInFrontInt32(const uint32_t i);
 
             /**
-             * @brief Put a unsigned int64 value to the beginning of the buffer.
+             * @brief 在缓冲区开头添加一个无符号长整型值。
              *
              * @param l
              */
             void AddInFrontInt64(const uint64_t l);
 
             /**
-             * @brief Remove all data in the buffer.
+             * @brief 移除缓冲区中的所有数据。
              *
              */
             void RetrieveAll();
 
             /**
-             * @brief Remove some bytes in the buffer.
+             * @brief 移除缓冲区中的一些字节。
              *
              * @param len
              */
             void Retrieve(size_t len);
 
             /**
-             * @brief Read data from a file descriptor and put it into the buffer.˝
+             * @brief 从文件描述符读取数据并放入缓冲区。
              *
-             * @param fd The file descriptor. It is usually a socket.
-             * @param retErrno The error code when reading.
-             * @return ssize_t The number of bytes read from the file descriptor. -1 is
-             * returned when an error occurs.
+             * @param fd 文件描述符，通常是一个socket。
+             * @param retErrno 读取时的错误代码。
+             * @return ssize_t 从文件描述符读取的字节数，发生错误时返回-1。
              */
             ssize_t ReadFd(int fd, int *retErrno);
 
             /**
-             * @brief Remove the data before a certain position from the buffer.
+             * @brief 移除缓冲区中某一位置之前的数据。
              *
-             * @param end The position.
+             * @param end 该位置。
              */
             void RetrieveUntil(const char *end)
             {
@@ -271,7 +275,7 @@ namespace tmms
             }
 
             /**
-             * @brief Find the position of the buffer where the CRLF is found.
+             * @brief 查找缓冲区中CRLF的位置。
              *
              * @return const char*
              */
@@ -282,15 +286,14 @@ namespace tmms
             }
 
             /**
-             * @brief Make sure the buffer has enough spaces to write data.
+             * @brief 确保缓冲区有足够的空间写入数据。
              *
              * @param len
              */
             void EnsureWritableBytes(size_t len);
 
             /**
-             * @brief Move the write pointer forward when the new data has been written
-             * to the buffer.
+             * @brief 当新数据写入缓冲区时，向前移动写指针。
              *
              * @param len
              */
@@ -301,8 +304,7 @@ namespace tmms
             }
 
             /**
-             * @brief Move the write pointer backward to remove data in the end of the
-             * buffer.
+             * @brief 向后移动写指针以移除缓冲区末尾的数据。
              *
              * @param offset
              */
@@ -313,7 +315,7 @@ namespace tmms
             }
 
             /**
-             * @brief Access a byte in the buffer.
+             * @brief 访问缓冲区中的一个字节。
              *
              * @param offset
              * @return const char&
@@ -330,10 +332,10 @@ namespace tmms
             }
 
           private:
-            size_t head_;
-            size_t initCap_;
-            std::vector<char> buffer_;
-            size_t tail_;
+            size_t head_; // 缓冲区读取位置的索引
+            size_t initCap_; // 缓冲区的初始容量
+            std::vector<char> buffer_; // 存储数据的字符向量
+            size_t tail_; // 缓冲区写入位置的索引
             const char *begin() const
             {
                 return &buffer_[0];

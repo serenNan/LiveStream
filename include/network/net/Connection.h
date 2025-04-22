@@ -26,7 +26,16 @@ namespace tmms
         class Connection; ///< Connection类前向声明
         using ConnectionPtr =
             std::shared_ptr<Connection>; ///< Connection智能指针类型，用于管理Connection对象生命周期
-        using ActiveCallback = std::function<void(const ConnectionPtr&)>;
+        using ActiveCallback = std::function<void(const ConnectionPtr &)>;
+        struct BufferNode
+        {
+            BufferNode(void *buf, size_t s) : addr(buf), size(s)
+            {
+            }
+            void *addr;
+            size_t size{0};
+        };
+        using BufferNodePtr = std::shared_ptr<BufferNode>;
         /**
          * @brief 网络连接基类，继承自Event
          * 封装了网络连接的基本操作和状态管理

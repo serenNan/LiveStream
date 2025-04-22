@@ -25,15 +25,6 @@ namespace tmms
         // 写完成回调函数类型
         using WriteCompleteCallback = std::function<void(const TcpConnectionPtr &)>; 
         using TimeOutCallback = std::function<void(const TcpConnectionPtr &)>;
-        struct BufferNode
-        {
-            BufferNode(void *buf, size_t s) : addr(buf), size(s)
-            {
-            }
-            void *addr;
-            size_t size{0};
-        };
-        using BufferNodePtr = std::shared_ptr<BufferNode>;
 
         /**
          * @brief TCP连接类，管理TCP连接的生命周期和事件处理
