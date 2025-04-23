@@ -19,7 +19,7 @@ int main()
     EventLoop *loop = eventloop_thread.Loop();
     if (loop)
     {
-        InetAddress listen("172.17.0.1:34444");
+        InetAddress listen("127.0.0.1:34444");
         TcpServer server(loop, listen);
         server.SetMessageCallback([](const TcpConnectionPtr &con, MsgBuffer &buf) {
             std::cout << "host:" << con->PeerAddr().ToIpPort() << " meg:" << buf.Peek()

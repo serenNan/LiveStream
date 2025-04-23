@@ -32,7 +32,7 @@ namespace tmms
             BufferNode(void *buf, size_t s) : addr(buf), size(s)
             {
             }
-            void *addr;
+            void *addr{nullptr};
             size_t size{0};
         };
         using BufferNodePtr = std::shared_ptr<BufferNode>;

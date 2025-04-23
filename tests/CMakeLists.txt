@@ -8,6 +8,12 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/base TEST_SOURCE)
 
 # add_executable(LiveStreamingTest ${TEST_SOURCE})
 
+add_executable(TestTcpConnection ./network/TestTcpConnection.cpp)
+target_link_libraries(TestTcpConnection
+    base
+    network
+)
+
 add_executable(TestTcpServer ./network/TestTcpServer.cpp)
 target_link_libraries(TestTcpServer
     base
@@ -16,6 +22,12 @@ target_link_libraries(TestTcpServer
 
 add_executable(TestTcpClient ./network/TestTcpClient.cpp)
 target_link_libraries(TestTcpClient
+    base
+    network
+)
+
+add_executable(TestUdpClient ./network/TestUdpClient.cpp)
+target_link_libraries(TestUdpClient
     base
     network
 )

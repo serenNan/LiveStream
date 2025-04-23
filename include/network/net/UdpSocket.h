@@ -1,5 +1,4 @@
 #pragma once
-#include "TcpConnection.h"
 #include "network/base/InetAddress.h"
 #include "network/base/MsgBuffer.h"
 #include "network/net/Connection.h"
@@ -204,8 +203,8 @@ namespace tmms
             bool closed_{false};                      ///< 连接是否已关闭标志，默认false
             int32_t max_idle_time_{30}; ///< 最大空闲超时时间(秒)，默认30秒
             std::weak_ptr<UdpTimeoutEntry> timeout_entry_; ///< 超时事件条目
-            MsgBuffer message_buffer_;                     ///< 接收消息缓冲区
             int32_t message_buffer_size_{65535};  ///< 消息缓冲区大小，默认65535字节
+            MsgBuffer message_buffer_;            ///< 接收消息缓冲区
             UdpSocketMessageCallback message_cb_; ///< 消息接收回调函数
             UdpSocketWriteCompleteCallback write_complete_cb_; ///< 写完成回调函数
             UdpSocketCloseConnectionCallback close_cb_;        ///< 连接关闭回调函数
