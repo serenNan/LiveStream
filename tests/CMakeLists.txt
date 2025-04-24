@@ -32,6 +32,12 @@ target_link_libraries(TestUdpClient
     network
 )
 
+add_executable(TestUdpServer ./network/TestUdpServer.cpp)
+target_link_libraries(TestUdpServer
+    base
+    network
+)
+
 
 # target_include_directories(LiveStreamingTest PRIVATE
 #     ${CMAKE_SOURCE_DIR}/third_party/gtest/include
