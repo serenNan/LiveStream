@@ -92,3 +92,61 @@ TEST(TestStringUtils, SplitString)
     EXPECT_EQ(result6[1], "b");
     EXPECT_EQ(result6[2], "c");
 }
+
+TEST(TestStringUtils, SplitStringWithFSM)
+{
+    // 测试1：基本分割功能
+    std::vector<std::string> result1 = StringUtils::SplitStringWithFSM("a,b,c", ',');
+    EXPECT_EQ(result1.size(), 3);
+    EXPECT_EQ(result1[0], "a");
+    EXPECT_EQ(result1[1], "b");
+    EXPECT_EQ(result1[2], "c");
+
+    // 测试2：空字符串
+    std::vector<std::string> result2 = StringUtils::SplitStringWithFSM("", ',');
+    EXPECT_EQ(result2.size(), 0);
+
+    // 测试3：只有一个分隔符
+    std::vector<std::string> result3 = StringUtils::SplitStringWithFSM(",", ',');
+    EXPECT_EQ(result3.size(), 0);
+
+    // 测试4：连续的分隔符
+    std::vector<std::string> result4 = StringUtils::SplitStringWithFSM("a,,b", ',');
+    EXPECT_EQ(result4.size(), 2);
+    EXPECT_EQ(result4[0], "a");
+    EXPECT_EQ(result4[1], "b");
+
+    // 测试5：分隔符在开头
+    std::vector<std::string> result5 = StringUtils::SplitStringWithFSM(",a,b", ',');
+    EXPECT_EQ(result5.size(), 2);
+    EXPECT_EQ(result5[0], "a");
+    EXPECT_EQ(result5[1], "b");
+
+    // 测试6：分隔符在结尾
+    std::vector<std::string> result6 = StringUtils::SplitStringWithFSM("a,b,", ',');
+    EXPECT_EQ(result6.size(), 2);
+    EXPECT_EQ(result6[0], "a");
+    EXPECT_EQ(result6[1], "b");
+
+    // 测试7：包含空格的字符串
+    std::vector<std::string> result7 = StringUtils::SplitStringWithFSM("hello world,cpp", ',');
+    EXPECT_EQ(result7.size(), 2);
+    EXPECT_EQ(result7[0], "hello world");
+    EXPECT_EQ(result7[1], "cpp");
+
+    // 测试8：长字符串
+    std::vector<std::string> result8 =
+        StringUtils::SplitStringWithFSM("one,two,three,four,five", ',');
+    EXPECT_EQ(result8.size(), 5);
+    EXPECT_EQ(result8[0], "one");
+    EXPECT_EQ(result8[1], "two");
+    EXPECT_EQ(result8[2], "three");
+    EXPECT_EQ(result8[3], "four");
+    EXPECT_EQ(result8[4], "five");
+}
+
+int main(int argc, char **argv)
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}

@@ -65,6 +65,15 @@ namespace tmms
              */
             static std::vector<std::string> SplitString(const std::string &s,
                                                         const std::string &delimiter);
+
+            /**
+             * @brief 使用有限状态机分割字符串
+             * @param s 原字符串
+             * @param delimiter 分隔符
+             * @return std::vector<std::string> 分割后的字符串数组
+             */
+            static std::vector<std::string> SplitStringWithFSM(const std::string &s,
+                                                               const char delimiter);
         };
     } // namespace base
 } // namespace tmms
