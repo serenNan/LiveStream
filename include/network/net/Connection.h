@@ -103,7 +103,7 @@ namespace tmms
                 auto iter = contexts_.find(type);
                 if (iter != contexts_.end())
                 {
-                    return std::dynamic_pointer_cast<T>(iter->second);
+                    return std::static_pointer_cast<T>(iter->second);
                 }
                 return std::shared_ptr<T>();
             }

@@ -24,7 +24,7 @@ int main()
     EventLoop *loop = eventloop_thread.Loop();
     if (loop)
     {
-        InetAddress server("172.17.0.1:34444");
+        InetAddress server("127.0.0.1:34444");
         std::shared_ptr<TcpClient> client = std::make_shared<TcpClient>(loop, server);
         client->SetRecMsgCallback([](const TcpConnectionPtr &con, MsgBuffer &buf) {
             std::cout << "host:" << con->PeerAddr().ToIpPort() << " meg:" << buf.Peek()
@@ -48,7 +48,9 @@ int main()
         client->SetConnectCallback([](const TcpConnectionPtr &con, bool connected) {
             if (connected)
             {
-                //con->Send(http_request, strlen(http_request));
+                auto size = htonl(strlen(http_request));
+                con->Send((const char *)&size, sizeof(size));
+                con->Send(http_request, strlen(http_request));
             }
         });
         client->Connect();

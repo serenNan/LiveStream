@@ -14,6 +14,7 @@ set(SOURCE
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/base)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/network)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/mmedia)
 add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
 
 
@@ -24,4 +25,5 @@ add_executable(LiveStreaming ${SOURCE})
 target_link_libraries(LiveStreaming PRIVATE 
     base
     network
+    mmedia
 )

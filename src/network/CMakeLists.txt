@@ -1,4 +1,4 @@
-# Base目录的CMake配置
+# Network目录的CMake配置
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} NETWORK_SOURCE)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/net NETWORK_SOURCE)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/base NETWORK_SOURCE)
