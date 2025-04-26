@@ -26,7 +26,7 @@ int main()
     {
         InetAddress server("127.0.0.1:34444");
         std::shared_ptr<TcpClient> client = std::make_shared<TcpClient>(loop, server);
-        client->SetRecMsgCallback([](const TcpConnectionPtr &con, MsgBuffer &buf) {
+        client->SetRecvMsgCallback([](const TcpConnectionPtr &con, MsgBuffer &buf) {
             std::cout << "host:" << con->PeerAddr().ToIpPort() << " meg:" << buf.Peek()
                       << std::endl;
             buf.RetrieveAll();

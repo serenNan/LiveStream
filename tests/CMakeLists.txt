@@ -2,23 +2,24 @@ cmake_minimum_required(VERSION 3.10)
 
 link_directories(${CMAKE_SOURCE_DIR}/third_party/gtest/lib)
 
+
+# Base 库测试
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} TEST_SOURCE)
-#aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/network TEST_SOURCE)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/base TEST_SOURCE)
+add_executable(BaseTest ${TEST_SOURCE})
 
-add_executable(LiveStreamingTest ${TEST_SOURCE})
-
-target_include_directories(LiveStreamingTest PRIVATE
+target_include_directories(BaseTest PRIVATE
     ${CMAKE_SOURCE_DIR}/third_party/gtest/include
 )
 
-target_link_libraries(LiveStreamingTest
+target_link_libraries(BaseTest
     base
     network
     libgtest.a
     libgtest_main.a
 )
 
+# Network 库测试
 add_executable(TestTcpConnection ./network/TestTcpConnection.cpp)
 target_link_libraries(TestTcpConnection
     base
@@ -49,5 +50,17 @@ target_link_libraries(TestUdpServer
     network
 )
   
+# Mmedia 库测试
+add_executable(TestHandShakeClient ./rtmp/TestHandShakeClient.cpp)
+target_link_libraries(TestHandShakeClient
+    base
+    network
+    mmedia
+)
 
-
+add_executable(TestHandShakeServer ./rtmp/TestHandShakeServer.cpp)
+target_link_libraries(TestHandShakeServer
+    base
+    network
+    mmedia
+)

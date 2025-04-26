@@ -23,7 +23,7 @@ namespace tmms
         // 消息接收回调函数类型
         using MessageCallback = std::function<void(const TcpConnectionPtr &, MsgBuffer &buffer)>;
         // 写完成回调函数类型
-        using WriteCompleteCallback = std::function<void(const TcpConnectionPtr &)>; 
+        using WriteCompleteCallback = std::function<void(const TcpConnectionPtr &)>;
         using TimeOutCallback = std::function<void(const TcpConnectionPtr &)>;
 
         /**
@@ -64,7 +64,7 @@ namespace tmms
              * @brief 设置接收消息回调函数（右值版本）
              * @param cb 接收消息回调函数
              */
-            void SetRecMsgCallback(MessageCallback &&cb);
+            void SetRecvMsgCallback(MessageCallback &&cb);
             /**
              * @brief 设置写完成回调函数
              * @param cb 写完成回调函数

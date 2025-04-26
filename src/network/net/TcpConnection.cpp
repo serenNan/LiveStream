@@ -53,7 +53,7 @@ void TcpConnection::SetRecMsgCallback(const MessageCallback &cb)
     message_cb_ = cb;
 }
 
-void TcpConnection::SetRecMsgCallback(MessageCallback &&cb)
+void TcpConnection::SetRecvMsgCallback(MessageCallback &&cb)
 {
     message_cb_ = std::move(cb);
 }
