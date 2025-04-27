@@ -64,3 +64,10 @@ target_link_libraries(TestHandShakeServer
     network
     mmedia
 )
+
+add_executable(TestRtmpServer ./rtmp/TestRtmpServer.cpp)
+target_link_libraries(TestRtmpServer
+    base
+    network
+    mmedia
+)

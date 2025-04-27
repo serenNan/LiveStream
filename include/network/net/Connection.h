@@ -21,11 +21,17 @@ namespace tmms
             kUserContext = 3,   ///< 用户自定义上下文
             kFlvContext = 4,    ///< FLV协议连接上下文
         };
-        using ContextPtr =
-            std::shared_ptr<void>; ///< 上下文智能指针类型，用于存储任意类型的上下文对象
-        class Connection; ///< Connection类前向声明
-        using ConnectionPtr =
-            std::shared_ptr<Connection>; ///< Connection智能指针类型，用于管理Connection对象生命周期
+
+        // 上下文智能指针类型，用于存储任意类型的上下文对象
+        using ContextPtr = std::shared_ptr<void>;
+
+        // Connection类前向声明
+        class Connection;
+
+        // Connection智能指针类型，用于管理Connection对象生命周期
+        using ConnectionPtr = std::shared_ptr<Connection>;
+
+        // 活动状态回调函数类型，用于处理连接活动状态变化
         using ActiveCallback = std::function<void(const ConnectionPtr &)>;
         struct BufferNode
         {
