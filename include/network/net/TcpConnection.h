@@ -59,7 +59,7 @@ namespace tmms
              * @brief 设置接收消息回调函数
              * @param cb 接收消息回调函数
              */
-            void SetRecMsgCallback(const MessageCallback &cb);
+            void SetRecvMsgCallback(const MessageCallback &cb);
             /**
              * @brief 设置接收消息回调函数（右值版本）
              * @param cb 接收消息回调函数

@@ -44,7 +44,7 @@ void TcpServer::OnAccept(int fd, const InetAddress &addr)
     {
         con->setActiveCallback(active_cb_);
     }
-    con->SetRecMsgCallback(message_cb_);
+    con->SetRecvMsgCallback(message_cb_);
     connections_.insert(con);
     loop_->AddEvent(con);
     con->EnableCheckIdleTimeout(30);

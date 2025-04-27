@@ -48,7 +48,7 @@ void TcpConnection::ForceClose()
     loop_->RunInLoop([this]() { OnClose(); });
 }
 
-void TcpConnection::SetRecMsgCallback(const MessageCallback &cb)
+void TcpConnection::SetRecvMsgCallback(const MessageCallback &cb)
 {
     message_cb_ = cb;
 }
