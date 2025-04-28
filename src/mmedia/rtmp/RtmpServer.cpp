@@ -1,7 +1,6 @@
 #include "RtmpServer.h"
-#include "RtmpHandShake.h"
+#include "RtmpContext.h"
 #include "mmedia/base/MMediaLog.h"
-// #include "RtmpContext.h"
 
 using namespace tmms::mm;
 
@@ -52,11 +51,11 @@ void RtmpServer::OnNewConnection(const TcpConnectionPtr &conn)
     }
 
     // 2. 创建 RTMP 上下文
-    RtmpHandShakePtr shake = std::make_shared<RtmpHandShake>(conn, rtmp_handler_);
+    RtmpContextPtr shake = std::make_shared<RtmpContext>(conn, rtmp_handler_);
 
     // 3. 设置连接上下文并启动握手
     conn->SetContext(kRtmpContext, shake);
-    shake->Start();
+    shake->StartHandShake();
 }
 
 void RtmpServer::OnDestroyed(const TcpConnectionPtr &conn)
@@ -74,13 +73,13 @@ void RtmpServer::OnDestroyed(const TcpConnectionPtr &conn)
 void RtmpServer::OnMessage(const TcpConnectionPtr &conn, MsgBuffer &buff)
 {
     // 1. 获取连接的 RTMP 上下文
-    RtmpHandShakePtr shake = conn->GetContext<RtmpHandShake>(kRtmpContext);
+    RtmpContextPtr shake = conn->GetContext<RtmpContext>(kRtmpContext);
 
     // 2. 处理 RTMP 消息
     if (shake)
     {
         // 解析 RTMP 消息
-        int ret = shake->HandShake(buff);
+        int ret = shake->Parse(buff);
 
         // 3. 处理解析结果
         if (ret == 0)
@@ -99,12 +98,12 @@ void RtmpServer::OnMessage(const TcpConnectionPtr &conn, MsgBuffer &buff)
 void RtmpServer::OnWriteComplete(const ConnectionPtr &conn)
 {
     // 1. 获取 RTMP 上下文
-    RtmpHandShakePtr shake = conn->GetContext<RtmpHandShake>(kRtmpContext);
+    RtmpContextPtr shake = conn->GetContext<RtmpContext>(kRtmpContext);
 
     // 2. 处理写完成事件
     if (shake)
     {
-        shake->WriteComplete();
+        shake->OnWriteComplete();
     }
 }
 
