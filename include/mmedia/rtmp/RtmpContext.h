@@ -84,7 +84,63 @@ namespace tmms
              */
             void MessageComplete(PacketPtr &&data);
 
+            /**
+             * @brief 构建RTMP数据块
+             * @param packet 数据包指针
+             * @param timestamp 时间戳，默认为0
+             * @param fmt0 是否使用格式0，默认为false
+             * @return 构建是否成功
+             */
+            bool BuildChunk(const PacketPtr &packet, uint32_t timestamp = 0, bool fmt0 = false);
+
+            /**
+             * @brief 发送数据
+             * 
+             * 将缓冲区中的数据发送出去
+             */
+            void Send();
+
+            /**
+             * @brief 检查连接是否就绪
+             * @return 连接是否就绪
+             */
+            bool Ready() const;
+
+            /**
+             * @brief 播放指定URL的媒体流
+             * @param url 要播放的媒体流URL
+             */
+            void Play(const std::string &url);
+
+            /**
+             * @brief 发布媒体流到指定URL
+             * @param url 要发布到的URL
+             */
+            void Publish(const std::string &url);
+
           private:
+            /**
+             * @brief 构建RTMP数据块（移动语义版本）
+             * @param packet 数据包指针（移动）
+             * @param timestamp 时间戳，默认为0
+             * @param fmt0 是否使用格式0，默认为false
+             * @return 构建是否成功
+             */
+            bool BuildChunk(PacketPtr &&packet, uint32_t timestamp = 0, bool fmt0 = false);
+
+            /**
+             * @brief 检查并发送数据
+             * 
+             * 检查是否有数据需要发送，如果有则发送
+             */
+            void CheckAndSend();
+
+            /**
+             * @brief 将数据包推入输出队列
+             * @param packet 要发送的数据包（移动）
+             */
+            void PushOutQueue(PacketPtr &&packet);
+
             RtmpHandShake handshake_;            ///< RTMP握手处理对象
             int32_t state_{kRtmpHandShake};      ///< 当前上下文状态，参见RtmpContextState
             TcpConnectionPtr connection_;        ///< TCP连接指针
@@ -100,7 +156,26 @@ namespace tmms
             // 标记是否使用扩展时间戳
             std::unordered_map<uint32_t, bool> in_ext_;
 
-            int32_t in_chunk_size_{128};
+            int32_t in_chunk_size_{128}; ///< 输入数据块大小，默认为128字节
+
+            char out_buffer_[4096]; ///< 输出缓冲区
+
+            char *out_current_{nullptr}; ///< 当前输出缓冲区位置指针
+
+            std::unordered_map<uint32_t, uint32_t> out_deltas_; ///< 输出时间戳增量信息
+
+            std::unordered_map<uint32_t, RtmpMsgHeaderPtr>
+                out_message_headers_; ///< 存储发送消息的头部信息
+
+            int32_t out_chunk_size_{4096}; ///< 输出数据块大小，默认为4096字节
+
+            std::list<PacketPtr> out_waiting_queue_; ///< 等待发送的数据包队列
+
+            std::list<BufferNodePtr> sending_bufs_; ///< 正在发送的缓冲区列表
+
+            std::list<PacketPtr> out_sending_packets_; ///< 正在发送的数据包列表
+
+            bool sending_{false}; ///< 标记当前是否正在发送数据
         };
 
         using RtmpContextPtr = std::shared_ptr<RtmpContext>;
