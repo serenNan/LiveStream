@@ -141,6 +141,67 @@ namespace tmms
              */
             void PushOutQueue(PacketPtr &&packet);
 
+            /**
+             * @brief 处理块大小消息
+             * 
+             * 处理接收到的设置RTMP块大小的控制消息
+             * @param packet 包含块大小信息的数据包
+             */
+            void HandleChunkSize(PacketPtr &packet);
+
+            /**
+             * @brief 处理确认窗口大小消息
+             * 
+             * 处理接收到的确认窗口大小的控制消息，用于流量控制
+             * @param packet 包含窗口大小信息的数据包
+             */
+            void HandleAckWindowSize(PacketPtr &packet);
+
+            /**
+             * @brief 处理用户控制消息
+             * 
+             * 处理接收到的用户控制消息，如ping、buffer等
+             * @param packet 包含用户控制消息的数据包
+             */
+            void HandleUserMessage(PacketPtr &packet);
+
+            /**
+             * @brief 发送设置块大小消息
+             * 
+             * 向对端发送设置RTMP块大小的控制消息
+             */
+            void SendSetChunkSize();
+
+            /**
+             * @brief 发送确认窗口大小消息
+             * 
+             * 向对端发送确认窗口大小的控制消息，用于流量控制
+             */
+            void SendAckWindowSize();
+
+            /**
+             * @brief 发送设置对端带宽消息
+             * 
+             * 向对端发送带宽限制信息，用于流量控制
+             */
+            void SendSetPeerBandwidth();
+
+            /**
+             * @brief 发送字节接收确认消息
+             * 
+             * 当接收的字节数达到确认窗口大小时，发送确认消息
+             */
+            void SendBytesRecv();
+
+            /**
+             * @brief 发送用户控制消息
+             * 
+             * @param nType 控制消息类型
+             * @param value1 第一个参数值
+             * @param value2 第二个参数值，用于某些特定类型的控制消息
+             */
+            void SendUserCtrlMessage(short nType, uint32_t value1, uint32_t value2);
+
             RtmpHandShake handshake_;            ///< RTMP握手处理对象
             int32_t state_{kRtmpHandShake};      ///< 当前上下文状态，参见RtmpContextState
             TcpConnectionPtr connection_;        ///< TCP连接指针
@@ -176,6 +237,12 @@ namespace tmms
             std::list<PacketPtr> out_sending_packets_; ///< 正在发送的数据包列表
 
             bool sending_{false}; ///< 标记当前是否正在发送数据
+
+            int32_t ack_size_{2500000}; ///< 确认窗口大小，默认为2.5MB，当接收的数据量达到此值时需要发送确认包
+
+            int32_t in_bytes_{0}; ///< 已接收的字节数，用于跟踪何时需要发送确认包
+
+            int32_t last_left_{0}; ///< 上次确认后剩余的字节数，用于计算下一次确认时机
         };
 
         using RtmpContextPtr = std::shared_ptr<RtmpContext>;

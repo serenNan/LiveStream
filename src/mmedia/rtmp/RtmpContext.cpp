@@ -44,7 +44,17 @@ int32_t RtmpContext::Parse(MsgBuffer &buff)
     }
     else if (state_ == kRtmpMessage)
     {
-        ret = ParseMessage(buff);
+        // 如果当前状态是消息处理阶段，调用消息解析函数
+        auto r = ParseMessage(buff);
+
+        // 获取缓冲区可读字节数
+        last_left_ = buff.ReadableBytes();
+
+        // 如果当前状态是消息处理阶段，调用消息解析函数
+        // return ParseMessage(buff);
+
+        // 如果缓冲区还有可读数据，继续解析
+        return r;
     }
 
     // 返回结果，可能是 0, -1, 或 2，取决于握手结果
@@ -66,6 +76,7 @@ void RtmpContext::OnWriteComplete()
     // 消息处理阶段写入完成后的操作，不做处理
     else if (state_ == kRtmpMessage)
     {
+        
     }
 }
 
@@ -89,6 +100,10 @@ int32_t RtmpContext::ParseMessage(MsgBuffer &buff)
     uint32_t total_bytes = buff.ReadableBytes();
     // 已解析的字节数 - 记录当前解析进度
     int32_t parsed = 0;
+
+    in_bytes_ += (buff.ReadableBytes() - last_left_);
+
+    SendBytesRecv();
 
     while (total_bytes > 1) // 至少需要1个字节才能开始解析
     {
@@ -296,8 +311,87 @@ int32_t RtmpContext::ParseMessage(MsgBuffer &buff)
 
 void RtmpContext::MessageComplete(PacketPtr &&data)
 {
-    RTMP_TRACE << "recv message type:" << data->PacketType() << " size:" << data->PacketSize()
-               << std::endl;
+    // 当一个完整的消息包接收完毕时，打印消息类型和消息长度
+    // RTMP_TRACE << " recv message type : " << data->PacketType() << " len : " <<
+    // data->PacketSize() << std::endl;
+
+    // 获取数据包的消息类型
+    // 获取数据包的类型
+    auto type = data->PacketType();
+
+    switch (type)
+    {
+    // 处理 RTMP 消息类型为 Chunk Size（分块大小）的数据包
+    case kRtmpMsgTypeChunkSize: {
+        // 调用 HandleChunkSize 函数处理分块大小消息
+        HandleChunkSize(data);
+        break;
+    }
+
+    // 处理 RTMP 消息类型为 Bytes Read（字节读取）的数据包
+    case kRtmpMsgTypeBytesRead: {
+        // 输出日志信息，表示接收到字节读取消息
+        RTMP_TRACE << " message bytes read recv.";
+        break;
+    }
+
+    // 处理 RTMP 消息类型为 User Control（用户控制）的数据包
+    case kRtmpMsgTypeUserControl: {
+        // 调用 HandleUserMessage 函数处理用户控制消息
+        HandleUserMessage(data);
+        break;
+    }
+
+    // 处理 RTMP 消息类型为 Window ACK Size（窗口确认大小）的数据包
+    case kRtmpMsgTypeWindowACKSize: {
+        // 调用 HandleAckWindowSize 函数处理窗口确认大小消息
+        HandleAckWindowSize(data);
+        break;
+    }
+
+    // // 处理 AMF3 消息类型
+    // case kRtmpMsgTypeAMF3Message: {
+    //     // 调用 HandleAmfCommand 函数来处理 AMF3 类型的命令消息
+    //     HandleAmfCommand(data, true);
+    //     break;
+    // }
+
+    // // 处理 AMF 消息类型
+    // case kRtmpMsgTypeAMFMessage: {
+    //     // 调用 HandleAmfCommand 函数来处理 AMF 类型的命令消息
+    //     HandleAmfCommand(data);
+    //     break;
+    // }
+
+    // // 处理 AMF 元数据
+    // case kRtmpMsgTypeAMFMeta:
+
+    // // 处理 AMF3 元数据
+    // case kRtmpMsgTypeAMF3Meta:
+
+    // // 处理音频数据
+    // case kRtmpMsgTypeAudio:
+
+    // // 处理视频数据
+    // case kRtmpMsgTypeVideo: {
+    //     // 设置包的类型
+    //     SetPacketType(data);
+
+    //     // 如果 rtmp_handler_ 对象存在
+    //     if (rtmp_handler_)
+    //     {
+    //         // 调用 rtmp_handler_ 的 OnRecv 方法，处理接收到的数据
+    //         rtmp_handler_->OnRecv(connection_, std::move(data));
+    //     }
+    //     break;
+    // }
+
+    // 处理不支持的消息类型
+    default:
+        // 输出错误日志，表示收到的消息类型不被支持
+        RTMP_ERROR << " not surpport message type : " << type;
+        break;
+    }
 }
 
 bool RtmpContext::BuildChunk(const PacketPtr &packet, uint32_t timestamp, bool fmt0)
@@ -542,7 +636,7 @@ void RtmpContext::Send()
     {
         return;
     }
-    
+
     // 标记当前状态为正在发送
     sending_ = true;
 
@@ -855,4 +949,339 @@ void RtmpContext::PushOutQueue(PacketPtr &&packet)
 {
     out_waiting_queue_.emplace_back(std::move(packet));
     Send();
+}
+
+void RtmpContext::SendSetChunkSize()
+{
+    // 创建一个新的数据包，初始大小为 64 字节
+    PacketPtr packet = Packet::NewPacket(64);
+
+    // 创建一个 RTMP 消息头的共享指针
+    RtmpMsgHeaderPtr header = std::make_shared<RtmpMsgHeader>();
+
+    // 如果消息头创建成功
+    if (header)
+    {
+        header->cs_id = kRtmpCSIDCommand; // 设置 Chunk Stream ID 为 RTMP 命令类型的固定 ID
+        header->msg_len = 0;              // 初始化消息长度为 0，稍后会设置
+        header->msg_type = kRtmpMsgTypeChunkSize; // 设置消息类型为设置 Chunk Size 类型
+        header->timestamp = 0;                    // 设置时间戳为 0
+        header->msg_sid = kRtmpMsID0; // 设置消息 Stream ID 为 0，表示系统控制消息
+        packet->SetExt(header);       // 将消息头附加到数据包中
+    }
+
+    // 获取数据包的指针
+    char *body = packet->Data();
+
+    // 将当前的 Chunk Size 写入到数据包的 body 部分
+    header->msg_len = BytesWriter::WriteUint32T(body, out_chunk_size_);
+
+    // 设置数据包的实际大小
+    packet->SetPacketSize(header->msg_len);
+
+    // 打印调试信息，输出当前发送的 Chunk Size 以及目标主机的 IP 和端口
+    RTMP_DEBUG << " send chuck size : " << out_chunk_size_
+               << " to host : " << connection_->PeerAddr().ToIpPort();
+
+    // 将数据包放入发送队列，并触发发送
+    PushOutQueue(std::move(packet));
+}
+
+void RtmpContext::SendAckWindowSize()
+{
+    // 创建一个新的数据包，初始大小为 64 字节
+    PacketPtr packet = Packet::NewPacket(64);
+
+    // 创建一个 RTMP 消息头的共享指针
+    RtmpMsgHeaderPtr header = std::make_shared<RtmpMsgHeader>();
+
+    // 如果消息头创建成功
+    if (header)
+    {
+        header->cs_id = kRtmpCSIDCommand; // 设置 Chunk Stream ID 为 RTMP 命令类型的固定 ID
+        header->msg_len = 0;              // 初始化消息长度为 0，稍后会设置
+        header->msg_type = kRtmpMsgTypeWindowACKSize; // 设置消息类型为窗口确认大小
+        header->timestamp = 0;                        // 设置时间戳为 0
+        header->msg_sid = kRtmpMsID0; // 设置消息 Stream ID 为 0，表示系统控制消息
+        packet->SetExt(header);       // 将消息头附加到数据包中
+    }
+
+    // 获取数据包的指针，用于写入数据
+    char *body = packet->Data();
+
+    // 将当前的确认窗口大小写入到数据包的 body 部分
+    header->msg_len = BytesWriter::WriteUint32T(body, ack_size_);
+
+    // 设置数据包的实际大小
+    packet->SetPacketSize(header->msg_len);
+
+    // 打印调试信息，输出当前发送的确认窗口大小以及目标主机的 IP 和端口
+    RTMP_DEBUG << " send act size : " << ack_size_
+               << " to host : " << connection_->PeerAddr().ToIpPort();
+
+    // 将数据包放入发送队列，并触发发送
+    PushOutQueue(std::move(packet));
+}
+
+void RtmpContext::SendSetPeerBandwidth()
+{
+    // 创建一个新的数据包，初始大小为 64 字节
+    PacketPtr packet = Packet::NewPacket(64);
+
+    // 创建一个 RTMP 消息头的共享指针
+    RtmpMsgHeaderPtr header = std::make_shared<RtmpMsgHeader>();
+
+    if (header) // 如果消息头创建成功
+    {
+        header->cs_id = kRtmpCSIDCommand; // 设置 Chunk Stream ID 为 RTMP 命令类型的固定 ID
+        header->msg_len = 0;              // 初始化消息长度为 0，稍后会设置
+        header->msg_type = kRtmpMsgTypeSetPeerBW; // 设置消息类型为 Set Peer Bandwidth
+        header->timestamp = 0;                    // 设置时间戳为 0
+        header->msg_sid = kRtmpMsID0; // 设置消息 Stream ID 为 0，表示系统控制消息
+        packet->SetExt(header);       // 将消息头附加到数据包中
+    }
+
+    // 获取数据包的指针，用于写入数据
+    char *body = packet->Data();
+
+    // 将当前的确认窗口大小写入到数据包的 body 部分
+    body += BytesWriter::WriteUint32T(body, ack_size_);
+
+    // 设置限制类型，0x02 表示动态（type = 2）
+    *body++ = 0x02;
+
+    header->msg_len = 5;
+
+    // 设置数据包的实际大小为 5 字节（4 字节的确认窗口大小 + 1 字节的限制类型）
+    packet->SetPacketSize(5);
+
+    // 打印调试信息，输出当前发送的带宽限制以及目标主机的 IP 和端口
+    RTMP_DEBUG << " send bandwidth : " << ack_size_
+               << " to host : " << connection_->PeerAddr().ToIpPort();
+
+    // 将数据包放入发送队列，并触发发送
+    PushOutQueue(std::move(packet));
+}
+
+void RtmpContext::SendBytesRecv()
+{
+    // 如果接收的字节数大于等于确认窗口大小
+    if (in_bytes_ >= ack_size_)
+    {
+        // 创建一个新的数据包，初始大小为 64 字节
+        PacketPtr packet = Packet::NewPacket(64);
+
+        // 创建一个 RTMP 消息头的共享指针
+        RtmpMsgHeaderPtr header = std::make_shared<RtmpMsgHeader>();
+
+        // 如果消息头创建成功
+        if (header)
+        {
+            header->cs_id = kRtmpCSIDCommand; // 设置 Chunk Stream ID 为 RTMP 命令类型的固定 ID
+            header->msg_len = 0;              // 初始化消息长度为 0，稍后会设置
+            header->msg_type =
+                kRtmpMsgTypeBytesRead;    // 设置消息类型为 Bytes Received (BytesRead) 消息
+            header->timestamp = 0;        // 设置时间戳为 0
+            header->msg_sid = kRtmpMsID0; // 设置消息 Stream ID 为 0，表示系统控制消息
+            packet->SetExt(header);       // 将消息头附加到数据包中
+        }
+
+        // 获取数据包的指针，用于写入数据
+        char *body = packet->Data();
+
+        // 将已接收的字节数写入到数据包的 body 部分，并更新消息长度
+        header->msg_len = BytesWriter::WriteUint32T(body, in_bytes_);
+
+        // 设置数据包的实际大小为消息长度
+        packet->SetPacketSize(header->msg_len);
+
+        // RTMP_DEBUG << " send act size : " << ack_size_ << " to host : " <<
+        // connection_->PeerAddr().ToIpPort();
+
+        // 将数据包放入发送队列，并触发发送
+        PushOutQueue(std::move(packet));
+
+        // 重置接收字节计数
+        in_bytes_ = 0;
+    }
+}
+
+void RtmpContext::SendUserCtrlMessage(short nType, uint32_t value1, uint32_t value2)
+{
+    // 创建一个新的数据包，初始大小为 64 字节
+    PacketPtr packet = Packet::NewPacket(64);
+
+    // 创建一个 RTMP 消息头的共享指针
+    RtmpMsgHeaderPtr header = std::make_shared<RtmpMsgHeader>();
+
+    // 如果消息头创建成功
+    if (header)
+    {
+        header->cs_id = kRtmpCSIDCommand; // 设置 Chunk Stream ID 为 RTMP 命令类型的固定 ID
+        header->msg_len = 0; // 初始化消息长度为 0，稍后会根据写入的数据内容进行设置
+        header->msg_type = kRtmpMsgTypeUserControl; // 设置消息类型为 User Control Message
+        header->timestamp = 0;                      // 设置时间戳为 0
+        header->msg_sid = kRtmpMsID0; // 设置消息 Stream ID 为 0，表示系统控制消息
+        packet->SetExt(header);       // 将消息头附加到数据包中
+    }
+
+    // 获取数据包的指针，用于写入数据
+    char *body = packet->Data();
+    char *p = body;
+
+    // 写入用户控制消息类型 (nType)
+    p += BytesWriter::WriteUint16T(body, nType);
+
+    // 写入第一个值 (value1)，通常用于标识用户控制消息的相关信息
+    p += BytesWriter::WriteUint32T(body, value1);
+
+    // 如果消息类型是设置缓冲区长度，则还需要写入第二个值 (value2)
+    if (nType == kRtmpEventTypeSetBufferLength)
+    {
+        p += BytesWriter::WriteUint32T(body, value2);
+    }
+
+    header->msg_len = p - body;
+
+    // 设置数据包的实际大小为已写入的字节数
+    packet->SetPacketSize(header->msg_len);
+
+    // 打印调试信息，显示发送的用户控制消息的类型和值
+    RTMP_DEBUG << " send user control type : " << nType << " value : " << value1
+               << " value2 : " << value2 << " to host : " << connection_->PeerAddr().ToIpPort();
+
+    // 将数据包放入发送队列，并触发发送
+    PushOutQueue(std::move(packet));
+}
+
+void RtmpContext::HandleChunkSize(PacketPtr &packet)
+{
+    // 检查数据包的大小是否至少为 4 字节，这是一个有效 Chunk Size 消息所需的最小长度
+    if (packet->PacketSize() >= 4)
+    {
+        // 从数据包的内容中读取 4 字节无符号整数，即 Chunk Size 的新值
+        auto size = BytesReader::ReadUint32T(packet->Data());
+
+        // 输出调试信息，显示当前的 Chunk Size 以及即将更新的新值
+        RTMP_DEBUG << " recv chunk size in_chunk_size : " << in_chunk_size_
+                   << " change to : " << size;
+
+        // 更新当前的 Chunk Size 值
+        in_chunk_size_ = size;
+    }
+    else
+    {
+        // 如果数据包的大小不足 4 字节，输出错误信息，提示数据包无效
+        RTMP_ERROR << " invalid chunk size packet msg_len : " << packet->PacketSize()
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+    }
+}
+
+void RtmpContext::HandleAckWindowSize(PacketPtr &packet)
+{
+    // 检查数据包的大小是否至少为 4 字节，这是一个有效的 Ack Window Size 消息所需的最小长度
+    if (packet->PacketSize() >= 4)
+    {
+        // 从数据包的内容中读取 4 字节无符号整数，即 Ack Window Size 的新值
+        auto size = BytesReader::ReadUint32T(packet->Data());
+
+        // 输出调试信息，显示当前的 Ack Window Size 以及即将更新的新值
+        RTMP_DEBUG << " recv ack window size ack_size_ : " << ack_size_ << " change to : " << size;
+
+        // 更新当前的 Ack Window Size 值
+        ack_size_ = size;
+    }
+    else
+    {
+        // 如果数据包的大小不足 4 字节，输出错误信息，提示数据包无效
+        RTMP_ERROR << " invalid ack window size packet msg_len : " << packet->PacketSize()
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+    }
+}
+
+void RtmpContext::HandleUserMessage(PacketPtr &packet)
+{
+    // 获取数据包的大小
+    auto msg_len = packet->PacketSize();
+
+    // 如果数据包的大小小于 6 字节，认为该用户控制消息无效，输出错误日志并返回
+    if (msg_len < 6)
+    {
+        RTMP_ERROR << " invalid user control packet msg_len : " << packet->PacketSize()
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        return;
+    }
+
+    // 获取数据包的内容指针
+    char *body = packet->Data();
+
+    // 读取前 2 字节，作为消息类型
+    auto type = BytesReader::ReadUint16T(body);
+
+    // 读取接下来的 4 字节，作为消息值
+    auto value = BytesReader::ReadUint32T(body + 2);
+
+    // 输出接收到的用户控制消息的类型和值
+    RTMP_TRACE << " recv user control type : " << type << " value : " << value
+               << " host : " << connection_->PeerAddr().ToIpPort();
+
+    // 根据消息类型进行处理
+    switch (type)
+    {
+    // 处理 Stream Begin 消息
+    case kRtmpEventTypeStreamBegin: {
+        RTMP_TRACE << " recv stream begin value : " << value
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        break;
+    }
+    // 处理 Stream EOF 消息
+    case kRtmpEventTypeStreamEOF: {
+        RTMP_TRACE << " recv stream eof value : " << value
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        break;
+    }
+    // 处理 Stream Dry 消息
+    case kRtmpEventTypeStreamDry: {
+        RTMP_TRACE << " recv stream dry value : " << value
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        break;
+    }
+    // 处理 Set Buffer Length 消息
+    case kRtmpEventTypeSetBufferLength: {
+        RTMP_TRACE << " recv set buffer length value : " << value
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+
+        // 进一步检查数据包长度是否足够，处理 Set Buffer Length 需要至少 10 字节的数据包
+        if (msg_len < 10)
+        {
+            RTMP_ERROR << " invalid user control packet msg_len : " << packet->PacketSize()
+                       << " host : " << connection_->PeerAddr().ToIpPort();
+            return;
+        }
+        break;
+    }
+    // 处理 Streams Recorded 消息
+    case kRtmpEventTypeStreamsRecorded: {
+        RTMP_TRACE << " recv stream recorded value : " << value
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        break;
+    }
+    // 处理 Ping Request 消息
+    case kRtmpEventTypePingRequest: {
+        RTMP_TRACE << " recv ping request value : " << value
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        // 发送 Ping Response 消息
+        SendUserCtrlMessage(kRtmpEventTypePingResponse, value, 0);
+        break;
+    }
+    // 处理 Ping Response 消息
+    case kRtmpEventTypePingResponse: {
+        RTMP_TRACE << " recv ping response value : " << value
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        break;
+    }
+    // 默认处理，忽略未识别的用户控制消息类型
+    default:
+        break;
+    }
 }
