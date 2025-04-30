@@ -1,51 +1,109 @@
 #pragma once
-#include <vector>
 #include "AMFAny.h"
+#include <vector>
 
 namespace tmms
 {
     namespace mm
     {
-        // 使用智能指针 std::shared_ptr 作为 AMFAny 类的指针类型，方便内存管理
+        /**
+         * @typedef AMFAnyPtr
+         * @brief AMFAny类的智能指针类型
+         *
+         * 使用std::shared_ptr管理AMFAny对象的内存，确保安全的内存管理和资源释放
+         */
         using AMFAnyPtr = std::shared_ptr<AMFAny>;
 
-        // AMFObject 类继承自 AMFAny，用于表示 AMF 数据中的对象类型
+        /**
+         * @class AMFObject
+         * @brief 表示AMF数据中的对象类型
+         *
+         * AMFObject类用于表示AMF数据中的对象，它是一个包含多个命名属性的复合类型。
+         * 每个属性都是AMFAny的子类实例，可以是任意类型（数字、字符串、布尔值、对象等）。
+         * 在RTMP通信中常用于传输结构化数据，如媒体元数据、命令参数等。
+         * 继承自AMFAny基类，实现了特定于对象类型的序列化和反序列化功能。
+         */
         class AMFObject : public AMFAny
         {
-        public:
-            // 构造函数，接受一个字符串参数用于初始化 name_ 成员变量
+          public:
+            /**
+             * @brief 构造函数，初始化带名称的AMFObject对象
+             * @param name AMF数据的名称
+             */
             AMFObject(const std::string &name);
 
-            // 默认构造函数
+            /**
+             * @brief 默认构造函数，创建一个无名称的AMFObject对象
+             */
             AMFObject();
 
-            // 重写 Decode 函数，用于解码数据，并将解码后的值存储为 AMF 对象
+            /**
+             * @brief 解码AMF对象类型数据
+             * @param data 要解码的二进制数据
+             * @param size 数据大小
+             * @param has 是否已包含类型标记，默认为false
+             * @return 成功解码的字节数
+             *
+             * 从给定的数据缓冲区解析AMF对象，包括所有属性及其值
+             */
             int Decode(const char *data, int size, bool has = false) override;
 
-            // 重写 IsObject 函数，判断当前对象是否为对象类型，返回 true
+            /**
+             * @brief 检查是否为对象类型
+             * @return 总是返回true，表示这是一个对象类型
+             */
             bool IsObject() override;
 
-            // 重写 Object 函数，返回当前对象的智能指针
+            /**
+             * @brief 获取对象值
+             * @return 当前对象的智能指针
+             */
             AMFObjectPtr Object() override;
 
-            // 重写 Dump 函数，用于输出调试信息，打印存储的对象属性
+            /**
+             * @brief 输出调试信息
+             *
+             * 输出该AMFObject对象的详细信息，包括名称和所有属性
+             */
             void Dump() const override;
 
-            // DecodeOnce 函数用于单次解码操作，返回解码消耗的字节数
+            /**
+             * @brief 单次解码AMF属性
+             * @param data 要解码的二进制数据
+             * @param size 数据大小
+             * @param has 是否已包含类型标记，默认为false
+             * @return 成功解码的字节数
+             *
+             * 从给定的数据缓冲区解析单个AMF属性，并添加到对象的属性列表中
+             */
             int DecodeOnce(const char *data, int size, bool has = false);
 
-            // 根据属性名获取对象中的属性，返回该属性的指针
+            /**
+             * @brief 通过名称获取对象属性
+             * @param name 属性名称
+             * @return 属性的智能指针的常量引用
+             *
+             * 返回指定名称的属性，如果找不到则返回一个空指针
+             */
             const AMFAnyPtr &Property(const std::string &name) const;
 
-            // 根据索引获取对象中的属性，返回该属性的指针
+            /**
+             * @brief 通过索引获取对象属性
+             * @param index 属性索引
+             * @return 属性的智能指针的常量引用
+             *
+             * 返回指定索引的属性，索引从0开始
+             */
             const AMFAnyPtr &Property(int index) const;
 
-            // 析构函数，释放资源
+            /**
+             * @brief 析构函数
+             */
             ~AMFObject();
 
-        private:
-            // 使用 std::vector 容器存储对象的所有属性，每个属性都是 AMFAny 的智能指针
-            std::vector<AMFAnyPtr> properties_;
+          private:
+            std::vector<AMFAnyPtr>
+                properties_; ///< 存储对象的所有属性，每个属性都是AMFAny的智能指针
         };
-    }
-}
+    } // namespace mm
+} // namespace tmms

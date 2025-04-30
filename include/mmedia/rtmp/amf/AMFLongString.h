@@ -5,34 +5,66 @@ namespace tmms
 {
     namespace mm
     {
-        // AMFLongString 类继承自 AMFAny，用于表示 AMF 数据中的长字符串类型
+        /**
+         * @class AMFLongString
+         * @brief 表示AMF数据中的长字符串类型
+         *
+         * AMFLongString类用于表示AMF数据中长度超过65535字节的字符串值，
+         * 使用32位整数存储长度信息，而普通字符串(AMFString)则使用16位整数。
+         * 在RTMP通信中用于传输大型文本数据，如XML文档或长描述。
+         * 继承自AMFAny基类，实现了特定于长字符串类型的序列化和反序列化功能。
+         */
         class AMFLongString : public AMFAny
         {
-        public:
-            // 构造函数，接受一个字符串参数用于初始化 name_ 成员变量
+          public:
+            /**
+             * @brief 构造函数，初始化带名称的AMFLongString对象
+             * @param name AMF数据的名称
+             */
             AMFLongString(const std::string &name);
 
-            // 默认构造函数
+            /**
+             * @brief 默认构造函数，创建一个无名称的AMFLongString对象
+             */
             AMFLongString();
 
-            // 重写 Decode 函数，用于解码数据，并将解码后的值存储为长字符串
+            /**
+             * @brief 解码AMF长字符串类型数据
+             * @param data 要解码的二进制数据
+             * @param size 数据大小
+             * @param has 是否已包含类型标记，默认为false
+             * @return 成功解码的字节数
+             *
+             * 从给定的数据缓冲区解析AMF长字符串，使用32位长度信息，并存储解析结果
+             */
             int Decode(const char *data, int size, bool has = false) override;
 
-            // 重写 IsString 函数，判断当前对象是否为字符串类型，返回 true
+            /**
+             * @brief 检查是否为字符串类型
+             * @return 总是返回true，表示这是一个字符串类型对象
+             */
             bool IsString() override;
 
-            // 重写 String 函数，返回存储的字符串值
-            const std::string& String() override;
+            /**
+             * @brief 获取字符串值
+             * @return 字符串值的常量引用
+             */
+            const std::string &String() override;
 
-            // 重写 Dump 函数，用于输出调试信息，打印存储的字符串值
+            /**
+             * @brief 输出调试信息
+             *
+             * 输出该AMFLongString对象的详细信息，包括名称和长字符串内容
+             */
             void Dump() const override;
 
-            // 析构函数，释放资源
+            /**
+             * @brief 析构函数
+             */
             ~AMFLongString();
-            
-        private:
-            // 存储解码后的字符串值
-            std::string string_;
+
+          private:
+            std::string string_; ///< 存储解码后的长字符串值
         };
-    }
-}
+    } // namespace mm
+} // namespace tmms
