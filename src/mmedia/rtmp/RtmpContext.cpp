@@ -300,7 +300,7 @@ int32_t RtmpContext::ParseMessage(MsgBuffer &buff)
 
         if (packet->Space() == 0)
         {
-            packet->SetPacketSize(msg_type);
+            packet->SetPacketType(msg_type);
             packet->SetTimeStamp(timestamp);
             MessageComplete(std::move(packet));
             packet.reset();
@@ -349,19 +349,19 @@ void RtmpContext::MessageComplete(PacketPtr &&data)
         break;
     }
 
-    // // 处理 AMF3 消息类型
-    // case kRtmpMsgTypeAMF3Message: {
-    //     // 调用 HandleAmfCommand 函数来处理 AMF3 类型的命令消息
-    //     HandleAmfCommand(data, true);
-    //     break;
-    // }
+    // 处理 AMF3 消息类型
+    case kRtmpMsgTypeAMF3Message: {
+        // 调用 HandleAmfCommand 函数来处理 AMF3 类型的命令消息
+        HandleAmfCommand(data, true);
+        break;
+    }
 
-    // // 处理 AMF 消息类型
-    // case kRtmpMsgTypeAMFMessage: {
-    //     // 调用 HandleAmfCommand 函数来处理 AMF 类型的命令消息
-    //     HandleAmfCommand(data);
-    //     break;
-    // }
+    // 处理 AMF 消息类型
+    case kRtmpMsgTypeAMFMessage: {
+        // 调用 HandleAmfCommand 函数来处理 AMF 类型的命令消息
+        HandleAmfCommand(data);
+        break;
+    }
 
     // // 处理 AMF 元数据
     // case kRtmpMsgTypeAMFMeta:
@@ -1284,4 +1284,60 @@ void RtmpContext::HandleUserMessage(PacketPtr &packet)
     default:
         break;
     }
+}
+
+void RtmpContext::HandleAmfCommand(PacketPtr &data, bool amf3)
+{
+    // 打印 AMF 消息的长度和来源主机地址
+    RTMP_TRACE << " amf message len : " << data->PacketSize()
+               << " host : " << connection_->PeerAddr().ToIpPort();
+
+    // 获取消息体的起始位置
+    const char *body = data->Data();
+
+    // 获取消息的总长度
+    int32_t msg_len = data->PacketSize();
+
+    // 如果是 AMF3 消息，跳过第一个字节（AMF3 消息格式的标志位）
+    if (amf3)
+    {
+        // 跳过一个字节
+        body += 1;
+
+        // 减去一个字节的长度
+        msg_len -= 1;
+    }
+
+    // 创建 AMFObject 对象用于解码 AMF 消息
+    AMFObject obj;
+
+    // 尝试解码消息体
+    if (obj.Decode(body, msg_len) < 0)
+    {
+        // 解码失败，打印错误信息
+        RTMP_ERROR << " amf decode failed. host : " << connection_->PeerAddr().ToIpPort();
+
+        // 退出函数
+        return;
+    }
+
+    // 提取 AMF 消息中的方法名（通常是消息的第一个属性）
+    const std::string &method = obj.Property(0)->String();
+
+    // 打印接收到的 AMF 命令及其来源主机地址
+    RTMP_TRACE << " amf command : " << method << " host : " << connection_->PeerAddr().ToIpPort();
+
+    // 查找对应的处理函数
+    auto iter = commands_.find(method);
+
+    if (iter == commands_.end())
+    {
+        // 如果未找到对应的处理函数，打印警告信息
+        RTMP_TRACE << " not surpport method : " << method
+                   << " host : " << connection_->PeerAddr().ToIpPort();
+        return;
+    }
+
+    // 调用对应的处理函数，并将解码后的 AMFObject 作为参数传递
+    iter->second(obj);
 }

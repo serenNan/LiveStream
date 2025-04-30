@@ -2,7 +2,8 @@
 #include "RtmpHandShake.h"
 #include "RtmpHandler.h"
 #include "RtmpHeader.h"
-#include "mmedia/base/Packet.h"
+#include "base/Packet.h"
+#include "amf/AMFObject.h"
 #include "network/net/TcpConnection.h"
 #include <cstdint>
 #include <unordered_map>
@@ -35,6 +36,8 @@ namespace tmms
             kRtmpEventTypePingResponse // Ping响应事件。对Ping请求的响应，确认连接状态
         };
 
+        using CommandFunc = std::function<void(AMFObject &obj)>;
+        
         // RTMP上下文类，负责管理一次RTMP连接的状态、握手、消息解析等
         class RtmpContext
         {
@@ -166,6 +169,15 @@ namespace tmms
             void HandleUserMessage(PacketPtr &packet);
 
             /**
+             * @brief 处理AMF命令消息
+             * 
+             * 处理接收到的AMF命令消息，如connect、createStream等
+             * @param data 包含AMF命令的数据包
+             * @param amf3 是否为AMF3格式，默认为false（AMF0格式）
+             */
+            void HandleAmfCommand(PacketPtr &data, bool amf3 = false);
+
+            /**
              * @brief 发送设置块大小消息
              * 
              * 向对端发送设置RTMP块大小的控制消息
@@ -192,6 +204,14 @@ namespace tmms
              * 当接收的字节数达到确认窗口大小时，发送确认消息
              */
             void SendBytesRecv();
+
+            // /**
+            //  * @brief 设置数据包类型
+            //  * 
+            //  * 根据RTMP消息类型设置数据包的类型标识，用于后续处理
+            //  * @param packet 需要设置类型的数据包
+            //  */
+            // void SetPacketType(PacketPtr &packet);
 
             /**
              * @brief 发送用户控制消息
@@ -243,6 +263,8 @@ namespace tmms
             int32_t in_bytes_{0}; ///< 已接收的字节数，用于跟踪何时需要发送确认包
 
             int32_t last_left_{0}; ///< 上次确认后剩余的字节数，用于计算下一次确认时机
+
+            std::unordered_map<std::string, CommandFunc> commands_;
         };
 
         using RtmpContextPtr = std::shared_ptr<RtmpContext>;
