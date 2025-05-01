@@ -7,6 +7,7 @@ namespace tmms
 {
     namespace base
     {
+        using std::string;
         /**
          * @brief 字符串工具类，提供常用的字符串操作方法
          */

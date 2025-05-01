@@ -196,7 +196,6 @@ uint8_t RtmpHandShake::GenRandom()
     return rand(mt) % 256;
 }
 
-
 void RtmpHandShake::CreateC1S1()
 {
     // 为整个C1S1数据包(1537字节，包括1字节的C0/S0)填充随机数据
@@ -335,7 +334,6 @@ void RtmpHandShake::SendC1S1()
     // 发送C0+C1或S0+S1数据包(1537字节)
     connection_->Send((const char *)C1S1_, 1537);
 }
-
 
 void RtmpHandShake::CreateC2S2(const char *data, int bytes, int offset)
 {
@@ -512,7 +510,6 @@ int32_t RtmpHandShake::HandShake(MsgBuffer &buff)
     // 返回1表示握手需要继续
     return 1;
 }
-
 
 void RtmpHandShake::WriteComplete()
 {

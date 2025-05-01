@@ -71,3 +71,10 @@ target_link_libraries(TestRtmpServer
     network
     mmedia
 )
+
+add_executable(TestRtmpClient ./rtmp/TestRtmpClient.cpp)
+target_link_libraries(TestRtmpClient
+    base
+    network
+    mmedia
+)

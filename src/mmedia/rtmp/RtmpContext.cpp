@@ -487,8 +487,8 @@ void RtmpContext::SetPacketType(PacketPtr &packet)
 void RtmpContext::MessageComplete(PacketPtr &&data)
 {
     // 当一个完整的消息包接收完毕时，打印消息类型和消息长度
-    // RTMP_TRACE << " recv message type : " << data->PacketType() << " len : " <<
-    // data->PacketSize() << std::endl;
+    RTMP_TRACE << " recv message type : " << data->PacketType() << " len : " <<
+    data->PacketSize() << std::endl;
 
     // 获取数据包的消息类型
     // 获取数据包的类型
