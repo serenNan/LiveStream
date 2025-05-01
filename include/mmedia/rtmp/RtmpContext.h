@@ -222,20 +222,119 @@ namespace tmms
              */
             void SendUserCtrlMessage(short nType, uint32_t value1, uint32_t value2);
 
+            /**
+             * @brief 发送连接请求
+             * 
+             * 客户端向服务器发送RTMP连接请求，包含应用名称和连接参数
+             */
+            void SendConnect();
+
+            /**
+             * @brief 处理连接请求
+             * 
+             * 服务器端处理客户端发来的连接请求，解析AMF对象中的连接参数
+             * @param obj AMF对象，包含连接请求的详细信息
+             */
+            void HandleConnect(AMFObject &obj);
+
+            /**
+             * @brief 发送创建流请求
+             * 
+             * 客户端向服务器发送创建流请求，用于建立媒体流通道，
+             * 成功后可以在该流上发布或播放媒体内容
+             */
+            void SendCreateStream();
+
+            /**
+             * @brief 处理创建流响应
+             * 
+             * 解析服务器返回的创建流响应，获取分配的流ID，
+             * 为后续的播放或发布操作做准备
+             * @param obj AMF对象，包含创建流响应的详细信息，如流ID等
+             */
+            void HandleCreateStream(AMFObject &obj);
+
+            /**
+             * @brief 发送 RTMP 状态消息
+             * 
+             * 向对端发送状态信息，包含级别、代码和描述，用于通知连接或流的状态变化
+             * @param level 状态级别，如"status"、"error"、"warning"等
+             * @param code 状态代码，如"NetStream.Play.Start"、"NetConnection.Connect.Success"等
+             * @param description 状态的详细描述信息
+             */
+            void SendStatus(const std::string &level, const std::string &code,
+                            const std::string &description);
+
+            /**
+             * @brief 发送 RTMP 播放请求
+             * 
+             * 客户端向服务器发送播放特定流的请求，指定要播放的流名称和参数
+             */
+            void SendPlay();
+
+            /**
+             * @brief 处理 RTMP 播放响应
+             * 
+             * 服务器端处理客户端发来的播放请求，准备流数据并发送响应
+             * @param obj AMF对象，包含播放请求的详细信息，如流名称、开始位置等
+             */
+            void HandlePlay(AMFObject &obj);
+
+            /**
+             * @brief 解析 RTMP URL 中的流名称和 tcUrl
+             * 
+             * 从完整的RTMP URL中提取应用名称、流名称和tcUrl等关键信息
+             */
+            void ParseNameAndTcUrl();
+
+            /**
+             * @brief 发送 RTMP 发布流请求
+             * 
+             * 客户端向服务器发送发布流请求，指定要发布的流名称和发布类型（如live、record等）
+             */
+            void SendPublish();
+
+            /**
+             * @brief 处理 RTMP 发布流响应
+             * 
+             * 服务器端处理客户端发来的发布流请求，创建流并准备接收媒体数据
+             * @param obj AMF对象，包含发布请求的详细信息，如流名称、发布类型等
+             */
+            void HandlePublish(AMFObject &obj);
+
+            /**
+             * @brief 处理 RTMP 调用结果响应
+             * 
+             * 处理服务器返回的命令调用结果，如连接、创建流等操作的响应
+             * @param obj AMF对象，包含调用结果的详细信息，如事务ID、返回值等
+             */
+            void HandleResult(AMFObject &obj);
+
+            /**
+             * @brief 处理 RTMP 错误消息
+             * 
+             * 处理RTMP通信过程中的错误消息，进行相应的错误处理和恢复
+             * @param obj AMF对象，包含错误信息的详细内容，如错误代码、描述等
+             */
+            void HandleError(AMFObject &obj);
+
+            /**
+             * @brief 设置数据包类型
+             * 
+             * 根据RTMP消息类型设置数据包的类型标识，用于后续处理
+             * @param packet 需要设置类型的数据包
+             */
+            void SetPacketType(PacketPtr &packet);
+
             RtmpHandShake handshake_;            ///< RTMP握手处理对象
             int32_t state_{kRtmpHandShake};      ///< 当前上下文状态，参见RtmpContextState
             TcpConnectionPtr connection_;        ///< TCP连接指针
             RtmpHandler *rtmp_handler_{nullptr}; ///< RTMP处理器指针
-            bool is_client_{false};              ///< 是否为客户端模式
 
-            // 存储接收到的消息头部
-            std::unordered_map<uint32_t, RtmpMsgHeaderPtr> in_message_headers_;
-            // 存储接收到的数据包
-            std::unordered_map<uint32_t, PacketPtr> in_packets_;
-            // 存储时间戳增量信息
-            std::unordered_map<uint32_t, uint32_t> in_deltas_;
-            // 标记是否使用扩展时间戳
-            std::unordered_map<uint32_t, bool> in_ext_;
+            std::unordered_map<uint32_t, RtmpMsgHeaderPtr> in_message_headers_; ///< 存储接收到的消息头部
+            std::unordered_map<uint32_t, PacketPtr> in_packets_;               ///< 存储接收到的数据包
+            std::unordered_map<uint32_t, uint32_t> in_deltas_;                 ///< 存储时间戳增量信息
+            std::unordered_map<uint32_t, bool> in_ext_;                        ///< 标记是否使用扩展时间戳
 
             int32_t in_chunk_size_{128}; ///< 输入数据块大小，默认为128字节
 
@@ -264,7 +363,21 @@ namespace tmms
 
             int32_t last_left_{0}; ///< 上次确认后剩余的字节数，用于计算下一次确认时机
 
-            std::unordered_map<std::string, CommandFunc> commands_;
+            std::string app_;             ///< RTMP 连接中用于指定目标应用，如"live"、"vod"等
+
+            std::string tc_url_;          ///< RTMP 连接中用于指定流的完整地址，格式通常为"rtmp://server/app"
+
+            std::string name_;            ///< 流的名称，用于指定要播放或发布的具体流标识符
+
+            std::string session_name_;    ///< 会话名称，用于唯一标识当前 RTMP 会话，便于跟踪和管理
+
+            std::string param_;           ///< 附加参数，用于传递额外的连接信息，如认证令牌、自定义配置等
+
+            bool is_player_{false};       ///< 标识当前 RTMP 连接的角色：false 表示发布者(Publisher)，true 表示播放器(Player)
+
+            std::unordered_map<std::string, CommandFunc> commands_;  ///< 命令处理函数映射表，存储各种RTMP命令与对应处理函数的关系
+
+            bool is_client_{false};       ///< 标识当前实例是否为客户端：true表示客户端，false表示服务器端
         };
 
         using RtmpContextPtr = std::shared_ptr<RtmpContext>;

@@ -5,7 +5,7 @@
 #include <memory>
 #include <sys/uio.h>
 #include <unistd.h>
-
+#include <iostream>
 using namespace tmms::network;
 
 TcpConnection::TcpConnection(EventLoop *loop, int socketfd, const InetAddress &localAddr,
@@ -120,6 +120,7 @@ void TcpConnection::OnWrite()
         NETWORK_TRACE << "host:" << peer_addr_.ToIpPort() << " had closed.";
         return;
     }
+    ExtendLife();
     if (!io_vec_list_.empty())
     {
         while (true)
@@ -264,7 +265,8 @@ void TcpConnection::SetTimeoutCallback(int timeout, TimeOutCallback &&cb)
 
 void TcpConnection::OnTimeout()
 {
-    NETWORK_ERROR << "host:" << peer_addr_.ToIpPort() << " timeout.";
+    NETWORK_ERROR << " host : " << peer_addr_.ToIpPort() << " timeout and close it.";
+    std::cout << "host : " << peer_addr_.ToIpPort() << " timeout and close it." << std::endl;
     OnClose();
 }
 
