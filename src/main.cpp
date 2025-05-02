@@ -13,6 +13,10 @@ using namespace tmms::base;
 
 int main(int argc, const char **argv)
 {
+    g_logger = new Logger(nullptr);
+
+    // 设置日志级别为 Trace
+    g_logger->SetLogLevel(kTrace);
     if (!sConfigManager->LoadConfig("../bin/config/config.json"))
     {
         std::cerr << "Failed to load config" << std::endl;
