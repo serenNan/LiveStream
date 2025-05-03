@@ -109,8 +109,6 @@ namespace tmms
              */
             DomainInfoPtr GetDomainInfo(const std::string &domain);
 
-
-
             std::string name_;       ///< 配置名称
             int32_t cpu_start_{0};   ///< CPU起始编号
             int32_t thread_nums_{1}; ///< 线程数量

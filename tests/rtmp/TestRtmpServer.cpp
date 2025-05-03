@@ -1,8 +1,8 @@
-#include <iostream>
+#include "mmedia/rtmp/RtmpHandShake.h"
+#include "mmedia/rtmp/RtmpServer.h"
 #include "network/net/EventLoop.h"
 #include "network/net/EventLoopThread.h"
-#include "mmedia/rtmp/RtmpServer.h"
-#include "mmedia/rtmp/RtmpHandShake.h"
+#include <iostream>
 
 using namespace tmms::network;
 using namespace tmms::mm;
@@ -17,7 +17,8 @@ std::thread th;
 using RtmpHandShakePtr = std::shared_ptr<RtmpHandShake>;
 
 // 定义一个简单的 HTTP 响应消息字符串
-const char *http_response = "HTTP/1.0 200 OK\r\nServer: tmms\r\nContent-Type: text/html\r\nContent-Length: 0\r\n\r\n";
+const char *http_response =
+    "HTTP/1.0 200 OK\r\nServer: tmms\r\nContent-Type: text/html\r\nContent-Length: 0\r\n\r\n";
 
 int main(int argc, const char **agrv)
 {
@@ -46,6 +47,6 @@ int main(int argc, const char **agrv)
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
-    
+
     return 0;
 }
