@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RTMP Test Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RTMP测试服务器</h1>
+        <p>此服务器用于测试LiveStreaming项目中的CodecHeader功能。</p>
+        
+        <h2>RTMP地址</h2>
+        <pre>rtmp://localhost:1935/live/stream</pre>
+        
+        <h2>使用方法</h2>
+        <ol>
+            <li>使用OBS等推流软件连接到上述RTMP地址</li>
+            <li>编译并运行TestCodecHeader程序</li>
+            <li>查看TestCodecHeader程序的输出</li>
+        </ol>
+        
+        <h2>RTMP状态</h2>
+        <p><a href="/stat">查看RTMP状态</a></p>
+    </div>
+</body>
+</html> 
