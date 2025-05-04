@@ -13,4 +13,7 @@ target_include_directories(live PUBLIC
 
 target_link_libraries(live PUBLIC
     ${CMAKE_SOURCE_DIR}/third_party/jsoncpp/lib/libjsoncpp.a
+    network
+    base
+    mmedia
 )
