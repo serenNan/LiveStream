@@ -1,7 +1,9 @@
 #include "Config.h"
 #include "AppInfo.h"
 #include "DomainInfo.h"
+#include "LogStream.h"
 #include <dirent.h>
+#include <fstream>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -22,8 +24,7 @@ bool Config::LoadConfig(const std::string &file)
     auto ok = Json::parseFromStream(reader, in, &root, &err);
     if (!ok)
     {
-        LOG_ERROR << "config file:" << file
-                  << " parse error.err"  << err;
+        LOG_ERROR << "config file:" << file << " parse error.err" << err;
         return false;
     }
 
@@ -341,7 +342,8 @@ const std::vector<ServiceInfoPtr> &Config::GetServiceInfos()
     return services_;
 }
 
-const ServiceInfoPtr &Config::GetServiceInfo(const std::string &protocol, const std::string &transport)
+const ServiceInfoPtr &Config::GetServiceInfo(const std::string &protocol,
+                                             const std::string &transport)
 {
     // 遍历服务信息，根据协议和传输层协议找到匹配的服务信息并返回
     for (auto &s : services_)
@@ -355,4 +357,3 @@ const ServiceInfoPtr &Config::GetServiceInfo(const std::string &protocol, const 
     // 如果未找到，返回空指针
     return service_info_nullptr;
 }
-

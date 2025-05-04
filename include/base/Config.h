@@ -1,13 +1,11 @@
 #pragma once
 #include "FileLog.h"
-#include "LogStream.h"
 #include "Logger.h"
 #include "NonCopyable.h"
 #include "Singleton.h"
-#include "json/json.h"
 #include <cstdint>
-#include <fstream>
 #include <iostream>
+#include <json/json.h>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -112,6 +110,7 @@ namespace tmms
             std::string name_;       ///< 配置名称
             int32_t cpu_start_{0};   ///< CPU起始编号
             int32_t thread_nums_{1}; ///< 线程数量
+            int32_t cpus_{1};        ///< CPU数量
 
           private:
             /**
