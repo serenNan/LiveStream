@@ -57,12 +57,12 @@ namespace tmms
             void StartEventLoop();
 
             EventLoop *loop_{nullptr};          ///< 事件循环指针
-            std::thread thread_;                ///< 事件循环线程
             bool running_{false};               ///< 线程运行状态标志
             std::mutex lock_;                   ///< 互斥锁
             std::condition_variable condition_; ///< 条件变量
             std::once_flag once_;               ///< 一次性标志
             std::promise<int> promise_loop_;    ///< 用于线程间通信的promise
+            std::thread thread_;                ///< 事件循环线程
         };
     } // namespace network
 

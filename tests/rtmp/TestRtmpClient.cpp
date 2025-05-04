@@ -88,7 +88,7 @@ int main(int argc, const char **agrv)
         RtmpClient client(loop, new RtmpHandlerImpl());
 
         // 调用 Play 函数，开始播放指定的 RTMP 流媒体 URL
-        client.Play("rtmp://czx.com/live/test");
+        client.Play("rtmp://seren.com/live/test");
 
         // 无限循环，保持主线程不退出
         while (1)

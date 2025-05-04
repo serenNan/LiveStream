@@ -1,0 +1,75 @@
+2025-05-04T20:50:59Z 198654 INFO [LiveService.cpp:149] LIVE:: session : seren.com/live/test is timeout. close it. Now : 1746363059063
+2025-05-04T20:50:59Z 198654 DEBUG [Session.cpp:341] [CloseUserNoLock] LIVE:: remove publisher, session name : seren.com/live/test , user : 127.0.0.1:60848 , elapsed : 34423 , ReadyTime : -1688631415 , stream time : 34423
+2025-05-04T20:51:00Z 198655 DEBUG [RtmpContext.cpp:1338] [HandleChunkSize] RTMP:: recv chunk size in_chunk_size : 128 change to : 4096
+2025-05-04T20:51:00Z 198655 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:60956
+2025-05-04T20:51:00Z 198655 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:60956
+2025-05-04T20:51:00Z 198655 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:60956
+2025-05-04T20:51:00Z 198655 DEBUG [LiveService.cpp:256] [OnPublish] LIVE:: on publish session name : seren.com/live/test param :  host : 127.0.0.1:60956 now : 1746363060218
+2025-05-04T20:51:00Z 198655 DEBUG [LiveService.cpp:75] [CreateSession] LIVE:: create session success. session_name : seren.com/live/test now : 1746363060218
+2025-05-04T20:51:32Z 198657 ERROR [TcpConnection.cpp:268] [OnTimeout]  host : 127.0.0.1:60848 timeout and close it.
+2025-05-04T20:51:34Z 198654 INFO [LiveService.cpp:149] LIVE:: session : seren.com/live/test is timeout. close it. Now : 1746363094131
+2025-05-04T20:51:34Z 198654 DEBUG [Session.cpp:341] [CloseUserNoLock] LIVE:: remove publisher, session name : seren.com/live/test , user : 127.0.0.1:60956 , elapsed : 33913 , ReadyTime : -1688599059 , stream time : 33913
+2025-05-04T20:51:35Z 198655 DEBUG [RtmpContext.cpp:1338] [HandleChunkSize] RTMP:: recv chunk size in_chunk_size : 128 change to : 4096
+2025-05-04T20:51:35Z 198655 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:61006
+2025-05-04T20:51:35Z 198655 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:61006
+2025-05-04T20:51:35Z 198655 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:61006
+2025-05-04T20:51:35Z 198655 DEBUG [LiveService.cpp:256] [OnPublish] LIVE:: on publish session name : seren.com/live/test param :  host : 127.0.0.1:61006 now : 1746363095320
+2025-05-04T20:51:35Z 198655 DEBUG [LiveService.cpp:75] [CreateSession] LIVE:: create session success. session_name : seren.com/live/test now : 1746363095320
+2025-05-04T20:52:06Z 198655 ERROR [TcpConnection.cpp:268] [OnTimeout]  host : 127.0.0.1:60956 timeout and close it.
+2025-05-04T20:52:09Z 198654 INFO [LiveService.cpp:149] LIVE:: session : seren.com/live/test is timeout. close it. Now : 1746363129191
+2025-05-04T20:52:09Z 198654 DEBUG [Session.cpp:341] [CloseUserNoLock] LIVE:: remove publisher, session name : seren.com/live/test , user : 127.0.0.1:61006 , elapsed : 33871 , ReadyTime : -1688560822 , stream time : 33871
+2025-05-04T20:52:10Z 198657 DEBUG [RtmpContext.cpp:1338] [HandleChunkSize] RTMP:: recv chunk size in_chunk_size : 128 change to : 4096
+2025-05-04T20:52:10Z 198657 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:61084
+2025-05-04T20:52:10Z 198657 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:61084
+2025-05-04T20:52:10Z 198657 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:61084
+2025-05-04T20:52:10Z 198657 DEBUG [LiveService.cpp:256] [OnPublish] LIVE:: on publish session name : seren.com/live/test param :  host : 127.0.0.1:61084 now : 1746363130358
+2025-05-04T20:52:10Z 198657 DEBUG [LiveService.cpp:75] [CreateSession] LIVE:: create session success. session_name : seren.com/live/test now : 1746363130358
+2025-05-04T20:52:42Z 198655 ERROR [TcpConnection.cpp:268] [OnTimeout]  host : 127.0.0.1:61006 timeout and close it.
+2025-05-04T20:52:44Z 198654 INFO [LiveService.cpp:149] LIVE:: session : seren.com/live/test is timeout. close it. Now : 1746363164267
+2025-05-04T20:52:44Z 198654 DEBUG [Session.cpp:341] [CloseUserNoLock] LIVE:: remove publisher, session name : seren.com/live/test , user : 127.0.0.1:61084 , elapsed : 33909 , ReadyTime : -1688525414 , stream time : 33909
+2025-05-04T20:52:45Z 198658 DEBUG [RtmpContext.cpp:1338] [HandleChunkSize] RTMP:: recv chunk size in_chunk_size : 128 change to : 4096
+2025-05-04T20:52:45Z 198658 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:61184
+2025-05-04T20:52:45Z 198658 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:61184
+2025-05-04T20:52:45Z 198658 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:61184
+2025-05-04T20:52:45Z 198658 DEBUG [LiveService.cpp:256] [OnPublish] LIVE:: on publish session name : seren.com/live/test param :  host : 127.0.0.1:61184 now : 1746363165439
+2025-05-04T20:52:45Z 198658 DEBUG [LiveService.cpp:75] [CreateSession] LIVE:: create session success. session_name : seren.com/live/test now : 1746363165439
+2025-05-04T20:53:17Z 198657 ERROR [TcpConnection.cpp:268] [OnTimeout]  host : 127.0.0.1:61084 timeout and close it.
+2025-05-04T20:53:19Z 198654 INFO [LiveService.cpp:149] LIVE:: session : seren.com/live/test is timeout. close it. Now : 1746363199336
+2025-05-04T20:53:19Z 198654 DEBUG [Session.cpp:341] [CloseUserNoLock] LIVE:: remove publisher, session name : seren.com/live/test , user : 127.0.0.1:61184 , elapsed : 33897 , ReadyTime : -1688490351 , stream time : 33897
+2025-05-04T20:53:20Z 198657 DEBUG [RtmpContext.cpp:1338] [HandleChunkSize] RTMP:: recv chunk size in_chunk_size : 128 change to : 4096
+2025-05-04T20:53:20Z 198657 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:61206
+2025-05-04T20:53:20Z 198657 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:61206
+2025-05-04T20:53:20Z 198657 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:61206
+2025-05-04T20:53:20Z 198657 DEBUG [LiveService.cpp:256] [OnPublish] LIVE:: on publish session name : seren.com/live/test param :  host : 127.0.0.1:61206 now : 1746363200497
+2025-05-04T20:53:20Z 198657 DEBUG [LiveService.cpp:75] [CreateSession] LIVE:: create session success. session_name : seren.com/live/test now : 1746363200497
+2025-05-04T20:53:28Z 198656 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:61218
+2025-05-04T20:53:28Z 198656 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:61218
+2025-05-04T20:53:28Z 198656 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:61218
+2025-05-04T20:53:28Z 198656 DEBUG [RtmpContext.cpp:1361] [HandleAckWindowSize] RTMP:: recv ack window size ack_size_ : 2500000 change to : 2500000
+2025-05-04T20:53:28Z 198656 DEBUG [RtmpContext.cpp:1322] [SendUserCtrlMessage] RTMP:: send user control type : 0 value : 1 value2 : 0 to host : 127.0.0.1:61218
+2025-05-04T20:53:28Z 198656 DEBUG [LiveService.cpp:207] [OnPlay] LIVE:: on play session name : seren.com/live/test param :  host : 127.0.0.1:61218 now : 1746363208477
+2025-05-04T20:53:28Z 198656 DEBUG [Session.cpp:242] [AddPlayer] LIVE:: add player, session name : seren.com/live/test , user : 127.0.0.1:61218
+2025-05-04T20:53:28Z 198656 DEBUG [Stream.cpp:374] [LocateGop] LIVE:: locate GOP sucess, elapsed : 0 ms, gop idx : 893 , frame index : 908 , lantency : 146 , user : 127.0.0.1:61218
+2025-05-04T20:53:28Z 198656 INFO [RtmpPlayerUser.cpp:54] LIVE:: rtmp sent audio_header now : 1746363208477 host : 127.0.0.1:61218
+2025-05-04T20:53:28Z 198656 INFO [RtmpPlayerUser.cpp:70] LIVE:: rtmp sent video_header now : 1746363208477 host : 127.0.0.1:61218
+2025-05-04T20:53:52Z 198658 ERROR [TcpConnection.cpp:268] [OnTimeout]  host : 127.0.0.1:61184 timeout and close it.
+2025-05-04T20:57:43Z 198656 DEBUG [Session.cpp:187] [CloseUser] LIVE:: remove publisher, session name : seren.com/live/test , user : 127.0.0.1:61218 , elapsed : 255151 , ReadyTime : -1688226221 , stream time : 263131
+2025-05-04T20:58:16Z 198656 ERROR [TcpConnection.cpp:268] [OnTimeout]  host : 127.0.0.1:61218 timeout and close it.
+2025-05-04T20:58:21Z 198656 DEBUG [RtmpContext.cpp:1338] [HandleChunkSize] RTMP:: recv chunk size in_chunk_size : 128 change to : 4096
+2025-05-04T20:58:21Z 198656 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:61540
+2025-05-04T20:58:21Z 198656 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:61540
+2025-05-04T20:58:21Z 198656 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:61540
+2025-05-04T20:58:21Z 198656 DEBUG [LiveService.cpp:256] [OnPublish] LIVE:: on publish session name : seren.com/live/test param :  host : 127.0.0.1:61540 now : 1746363501704
+2025-05-04T20:58:37Z 198658 DEBUG [RtmpContext.cpp:1191] [SendAckWindowSize] RTMP:: send act size : 2500000 to host : 127.0.0.1:61575
+2025-05-04T20:58:37Z 198658 DEBUG [RtmpContext.cpp:1231] [SendSetPeerBandwidth] RTMP:: send bandwidth : 2500000 to host : 127.0.0.1:61575
+2025-05-04T20:58:37Z 198658 DEBUG [RtmpContext.cpp:1155] [SendSetChunkSize] RTMP:: send chuck size : 4096 to host : 127.0.0.1:61575
+2025-05-04T20:58:37Z 198658 DEBUG [RtmpContext.cpp:1361] [HandleAckWindowSize] RTMP:: recv ack window size ack_size_ : 2500000 change to : 2500000
+2025-05-04T20:58:37Z 198658 DEBUG [RtmpContext.cpp:1322] [SendUserCtrlMessage] RTMP:: send user control type : 0 value : 1 value2 : 0 to host : 127.0.0.1:61575
+2025-05-04T20:58:37Z 198658 DEBUG [LiveService.cpp:207] [OnPlay] LIVE:: on play session name : seren.com/live/test param :  host : 127.0.0.1:61575 now : 1746363517295
+2025-05-04T20:58:37Z 198658 DEBUG [Session.cpp:242] [AddPlayer] LIVE:: add player, session name : seren.com/live/test , user : 127.0.0.1:61575
+2025-05-04T20:58:37Z 198658 DEBUG [Stream.cpp:374] [LocateGop] LIVE:: locate GOP sucess, elapsed : 0 ms, gop idx : 33301 , frame index : 33415 , lantency : 1067 , user : 127.0.0.1:61575
+2025-05-04T20:58:37Z 198658 INFO [RtmpPlayerUser.cpp:54] LIVE:: rtmp sent audio_header now : 1746363517295 host : 127.0.0.1:61575
+2025-05-04T20:58:37Z 198658 INFO [RtmpPlayerUser.cpp:70] LIVE:: rtmp sent video_header now : 1746363517295 host : 127.0.0.1:61575
+2025-05-04T20:58:52Z 198657 ERROR [TcpConnection.cpp:268] [OnTimeout]  host : 127.0.0.1:61206 timeout and close it.
+2025-05-04T21:02:13Z 198658 ERROR [TcpConnection.cpp:102] [OnError] host:127.0.0.1:61575 error:Connection reset by peer
+2025-05-04T21:02:13Z 198658 DEBUG [Session.cpp:187] [CloseUser] LIVE:: remove publisher, session name : seren.com/live/test , user : 127.0.0.1:61575 , elapsed : 216167 , ReadyTime : -1687956939 , stream time : 532965

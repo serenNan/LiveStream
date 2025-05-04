@@ -41,7 +41,7 @@ void PipeEvent::OnRead()
         NETWORK_ERROR << "pipe read failed.error" << errno;
         return;
     }
-    std::cout << "pipe read tmp:" << tmp << std::endl;
+    //std::cout << "pipe read tmp:" << tmp << std::endl;
 }
 
 void PipeEvent::OnClose()

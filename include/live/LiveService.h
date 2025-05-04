@@ -154,6 +154,6 @@ namespace tmms
 /**
  * @brief 定义宏sLiveService，用于获取LiveService的单例实例
  */
-#define sLiveService lss::base::Singleton<lss::live::LiveService>::Instance()
+#define sLiveService tmms::base::Singleton<tmms::live::LiveService>::Instance()
     } // namespace live
 } // namespace tmms
