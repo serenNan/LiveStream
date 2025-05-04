@@ -6,7 +6,7 @@
   "log" :
   {
     "level" : "DEBUG",
-    "name" : "tmms_server.log",
+    "name" : "LiveStream.log",
     "path" : "../logs"
   },
   "service" :
