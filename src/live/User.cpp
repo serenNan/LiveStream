@@ -4,9 +4,11 @@
 using namespace tmms::live;
 
 User::User(const ConnectionPtr &ptr, const StreamPtr &stream, const SessionPtr &s)
-    : connection_(ptr)              // 初始化连接指针
-    , stream_(stream)               // 初始化流指针
-    , session_(s)                   // 初始化会话指针
+    : connection_(ptr) // 初始化连接指针
+      ,
+      stream_(stream) // 初始化流指针
+      ,
+      session_(s) // 初始化会话指针
 {
     // 获取当前时间戳并设置为开始时间戳
     start_timestamp_ = tmms::base::TTime::NowMS();
@@ -15,7 +17,7 @@ User::User(const ConnectionPtr &ptr, const StreamPtr &stream, const SessionPtr &
     user_id_ = ptr->PeerAddr().ToIpPort();
 }
 
-const string &User::DomainName() const 
+const string &User::DomainName() const
 {
     // 返回域名
     return domain_name_;
@@ -63,7 +65,7 @@ void User::SetParam(const string &domain)
     param_ = domain;
 }
 
-const AppInfoPtr &User::GetAppInfo()const
+const AppInfoPtr &User::GetAppInfo() const
 {
     // 返回应用信息指针
     return app_info_;
@@ -118,7 +120,7 @@ ConnectionPtr User::GetConnection()
 uint64_t User::ElapsedTime()
 {
     // 返回当前时间戳与开始时间戳的差值
-        return tmms::base::TTime::NowMS() - start_timestamp_;
+    return tmms::base::TTime::NowMS() - start_timestamp_;
 }
 
 void User::Active()
