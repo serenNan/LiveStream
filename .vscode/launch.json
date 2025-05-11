@@ -1,7 +1,6 @@
 {
     "version": "0.2.0",
     "configurations": [
-
         {
             "name": "Main",
             "type": "cppdbg",
@@ -27,10 +26,28 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
+        },
+        {
+            "name": "QtBuild",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/build",
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "/usr/local/Qt/Qt6.5.3/6.5.3/gcc_64/bin"
+                }
+            ],
+            "externalConsole": false,
+            "miDebuggerPath": "/usr/bin/gdb",
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "Test",
@@ -57,11 +74,10 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestTcpConnection",
@@ -88,11 +104,10 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestTcpServer",
@@ -119,13 +134,11 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
-        
         {
             "name": "TestTcpClient",
             "type": "cppdbg",
@@ -151,13 +164,12 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
-         {
+        {
             "name": "TestUdpClient",
             "type": "cppdbg",
             "request": "launch",
@@ -182,11 +194,10 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestUdpServer",
@@ -213,11 +224,10 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestRtmpServer",
@@ -244,11 +254,10 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestRtmpClient",
@@ -275,11 +284,10 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "simple_thread_pool_test",
@@ -306,11 +314,10 @@
                 "traceResponse": true,
                 "engineLogging": true
             },
-            // 新增配置项
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
-            }
-            
-        },
+            },
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
+        }
     ]
 }

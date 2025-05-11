@@ -20,12 +20,12 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/src/mmedia)
 #add_subdirectory(${CMAKE_SOURCE_DIR}/tests)
 #add_subdirectory(${CMAKE_SOURCE_DIR}/note)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src/live)
+add_subdirectory(${CMAKE_SOURCE_DIR}/gui)
 
 
 add_executable(LiveStreaming ${SOURCE})
 
 
-# 确保主程序链接了base库和jsoncpp库
 target_link_libraries(LiveStreaming PRIVATE 
     base
     network
