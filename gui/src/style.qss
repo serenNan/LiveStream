@@ -1,0 +1,166 @@
+/* 全局样式 */
+QWidget {
+    font-family: "Microsoft YaHei", "SimHei", sans-serif;
+    font-size: 12px;
+}
+
+/* 主窗口样式 */
+QMainWindow {
+    background-color: #f5f5f5;
+}
+
+/* 分组框样式 */
+QGroupBox {
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-top: 1ex;
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 0 5px;
+    background-color: #ffffff;
+    color: #333333;
+    font-weight: bold;
+}
+
+/* 按钮样式 */
+QPushButton {
+    padding: 5px 15px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    min-height: 30px;
+}
+
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #888888;
+}
+
+/* 启动按钮样式 */
+#startButton {
+    background-color: #4CAF50;
+}
+
+#startButton:hover {
+    background-color: #45a049;
+}
+
+#startButton:pressed {
+    background-color: #3e8e41;
+}
+
+/* 停止按钮样式（通过动态属性设置） */
+#startButton[status="running"] {
+    background-color: #f44336;
+}
+
+#startButton[status="running"]:hover {
+    background-color: #e53935;
+}
+
+#startButton[status="running"]:pressed {
+    background-color: #d32f2f;
+}
+
+/* 清空日志按钮样式 */
+#clearLogButton {
+    background-color: #2196F3;
+}
+
+#clearLogButton:hover {
+    background-color: #0b7dda;
+}
+
+#clearLogButton:pressed {
+    background-color: #0a6fc2;
+}
+
+/* 状态标签样式 */
+#statusValueLabel[status="running"] {
+    color: green;
+    font-weight: bold;
+}
+
+#statusValueLabel[status="stopped"] {
+    color: red;
+    font-weight: bold;
+}
+
+/* 文本框样式 */
+QTextEdit {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* 只读文本框样式 */
+QLineEdit[readOnly="true"] {
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 5px;
+    color: #555555;
+}
+
+/* 菜单栏样式 */
+QMenuBar {
+    background-color: #333333;
+    color: white;
+}
+
+QMenuBar::item {
+    background-color: transparent;
+    padding: 5px 10px;
+}
+
+QMenuBar::item:selected {
+    background-color: #555555;
+}
+
+QMenu {
+    background-color: white;
+    border: 1px solid #cccccc;
+}
+
+QMenu::item {
+    padding: 5px 30px 5px 20px;
+}
+
+QMenu::item:selected {
+    background-color: #f0f0f0;
+    color: #333333;
+}
+
+/* 状态栏样式 */
+QStatusBar {
+    background-color: #f0f0f0;
+    color: #333333;
+}
+
+/* 滚动条样式 */
+QScrollBar:vertical {
+    border: none;
+    background: #f0f0f0;
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #cccccc;
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #aaaaaa;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+} 

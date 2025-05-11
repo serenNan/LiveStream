@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QMessageBox>
+#include <QStyle>
 
 using namespace tmms::base;
 
@@ -17,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("直播流服务控制台");
+
+    // 设置初始状态属性
+    ui->startButton->setProperty("status", "stopped");
+    ui->statusValueLabel->setProperty("status", "stopped");
 
     // 创建状态更新定时器
     m_statusTimer = new QTimer(this);
@@ -66,11 +71,7 @@ void MainWindow::on_startButton_clicked()
         // 更新UI状态
         ui->startButton->setEnabled(false);
         ui->startButton->setText("正在启动...");
-        // 只修改文本颜色，保留原有背景样式
-        ui->startButton->setStyleSheet(
-            "QPushButton { color: red; background-color: #4CAF50; border-radius: 5px; }"
-            "QPushButton:hover { background-color: #45a049; }"
-            "QPushButton:pressed { background-color: #3e8e41; }");
+        // 不再直接设置样式，保持当前样式
 
         // 启动服务
         logMessage(kInfo, "正在启动直播服务...");
@@ -81,11 +82,7 @@ void MainWindow::on_startButton_clicked()
         // 更新UI状态
         ui->startButton->setEnabled(false);
         ui->startButton->setText("正在停止...");
-        // 只修改文本颜色，保留原有背景样式
-        ui->startButton->setStyleSheet(
-            "QPushButton { color: white; background-color: #f44336; border-radius: 5px; }"
-            "QPushButton:hover { background-color: #e53935; }"
-            "QPushButton:pressed { background-color: #d32f2f; }");
+        // 不再直接设置样式，保持当前样式
 
         // 停止服务
         logMessage(kInfo, "正在停止直播服务...");
@@ -107,27 +104,25 @@ void MainWindow::updateStatus()
         ui->startButton->setEnabled(true);
         ui->startButton->setText(m_isRunning ? "停止" : "启动");
 
-        // 根据状态设置按钮样式
+        // 使用属性来设置样式
         if (m_isRunning)
         {
-            // 运行中状态 - 红色停止按钮
-            ui->startButton->setStyleSheet(
-                "QPushButton { color: white; background-color: #f44336; border-radius: 5px; }"
-                "QPushButton:hover { background-color: #e53935; }"
-                "QPushButton:pressed { background-color: #d32f2f; }");
+            ui->startButton->setProperty("status", "running");
+            ui->statusValueLabel->setProperty("status", "running");
             ui->statusValueLabel->setText("运行中");
-            ui->statusValueLabel->setStyleSheet("color: green;");
         }
         else
         {
-            // 停止状态 - 绿色启动按钮
-            ui->startButton->setStyleSheet(
-                "QPushButton { color: white; background-color: #4CAF50; border-radius: 5px; }"
-                "QPushButton:hover { background-color: #45a049; }"
-                "QPushButton:pressed { background-color: #3e8e41; }");
+            ui->startButton->setProperty("status", "stopped");
+            ui->statusValueLabel->setProperty("status", "stopped");
             ui->statusValueLabel->setText("已停止");
-            ui->statusValueLabel->setStyleSheet("color: red;");
         }
+
+        // 强制刷新样式
+        ui->startButton->style()->unpolish(ui->startButton);
+        ui->startButton->style()->polish(ui->startButton);
+        ui->statusValueLabel->style()->unpolish(ui->statusValueLabel);
+        ui->statusValueLabel->style()->polish(ui->statusValueLabel);
     }
 
     // 更新状态栏消息
