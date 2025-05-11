@@ -86,4 +86,14 @@ class MainWindow : public QMainWindow
      * @param message 日志消息
      */
     void handleServiceLog(int level, const QString &message);
+    
+    /**
+     * @brief 打开推流对话框按钮点击事件处理
+     */
+    void on_pushStreamButton_clicked();
+    
+    /**
+     * @brief 推流菜单项点击事件处理
+     */
+    void on_actionPushStream_triggered();
 };

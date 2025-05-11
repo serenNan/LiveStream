@@ -43,7 +43,6 @@
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">color: red;</string>
          </property>
          <property name="text">
           <string>已停止</string>
@@ -64,7 +63,26 @@
         </spacer>
        </item>
        <item row="0" column="3">
-   <widget class="QPushButton" name="startButton">
+        <widget class="QPushButton" name="pushStreamButton">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>视频推流</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QPushButton" name="startButton">
          <property name="minimumSize">
           <size>
            <width>120</width>
@@ -193,8 +211,10 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>文件</string>
+     <string>设置</string>
     </property>
+    <addaction name="actionPushStream"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -215,6 +235,11 @@
   <action name="actionAbout">
    <property name="text">
     <string>关于</string>
+   </property>
+  </action>
+  <action name="actionPushStream">
+   <property name="text">
+    <string>视频推流</string>
    </property>
   </action>
  </widget>

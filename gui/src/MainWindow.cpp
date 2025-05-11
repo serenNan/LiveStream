@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "LiveStart.h"
+#include "PushStreamDialog.h"
 #include "base/ConfigManager.h"
 #include "base/LogStream.h"
 #include <QDateTime>
@@ -260,4 +261,23 @@ void MainWindow::logMessage(int level, const QString &message)
 
     // 临时打印到控制台
     qDebug() << logEntry;
+}
+
+/**
+ * @brief 打开推流对话框按钮点击事件处理
+ */
+void MainWindow::on_pushStreamButton_clicked()
+{
+    // 创建并显示推流对话框
+    PushStreamDialog dialog(this);
+    dialog.exec();
+}
+
+/**
+ * @brief 推流菜单项点击事件处理
+ */
+void MainWindow::on_actionPushStream_triggered()
+{
+    // 调用按钮点击事件处理函数
+    on_pushStreamButton_clicked();
 }

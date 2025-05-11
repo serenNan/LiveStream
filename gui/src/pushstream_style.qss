@@ -1,0 +1,183 @@
+/* 推流对话框全局样式 */
+QWidget {
+    font-family: "Microsoft YaHei", "SimHei", sans-serif;
+    font-size: 12px;
+}
+
+QDialog {
+    background-color: #f5f5f5;
+}
+
+/* 分组框样式 */
+QGroupBox {
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-top: 1ex;
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    padding: 0 5px;
+    background-color: #ffffff;
+    color: #333333;
+    font-weight: bold;
+}
+
+/* 输入框样式 */
+QLineEdit {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: #ffffff;
+    selection-background-color: #2196F3;
+}
+
+QLineEdit:read-only {
+    background-color: #f9f9f9;
+    color: #555555;
+}
+
+/* 按钮样式 */
+QPushButton {
+    padding: 5px 15px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    min-height: 30px;
+}
+
+QPushButton:hover {
+    background-color: #0b7dda;
+}
+
+QPushButton:pressed {
+    background-color: #0a6fc2;
+}
+
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #888888;
+}
+
+QPushButton[status="running"] {
+    background-color: #f44336;
+}
+
+QPushButton[status="running"]:hover {
+    background-color: #e53935;
+}
+
+QPushButton[status="running"]:pressed {
+    background-color: #d32f2f;
+}
+
+QPushButton[status="stopped"] {
+    background-color: #4CAF50;
+}
+
+QPushButton[status="stopped"]:hover {
+    background-color: #45a049;
+}
+
+QPushButton[status="stopped"]:pressed {
+    background-color: #3e8e41;
+}
+
+/* 特殊按钮样式 - 选择文件按钮 */
+QPushButton#selectFileButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+QPushButton#selectFileButton:hover {
+    background-color: #0b7dda;
+}
+
+QPushButton#selectFileButton:pressed {
+    background-color: #0a6fc2;
+}
+
+/* 下拉框样式 */
+QComboBox {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: #ffffff;
+    min-width: 6em;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    border-left: 1px solid #dddddd;
+}
+
+/* 复选框样式 */
+QCheckBox {
+    spacing: 5px;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QCheckBox::indicator:unchecked {
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    border-radius: 2px;
+}
+
+QCheckBox::indicator:checked {
+    border: 1px solid #2196F3;
+    background-color: #2196F3;
+    border-radius: 2px;
+}
+
+/* 文本编辑框样式 */
+QTextEdit {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 5px;
+    selection-background-color: #2196F3;
+    font-family: Consolas, Monospace;
+}
+
+/* 标签样式 */
+QLabel {
+    color: #333333;
+}
+
+QLabel#statusLabel, QLabel#timeLabel {
+    font-weight: bold;
+    color: #2196F3;
+}
+
+/* 滚动条样式 */
+QScrollBar:vertical {
+    border: none;
+    background: #f0f0f0;
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #cccccc;
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #aaaaaa;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+} 

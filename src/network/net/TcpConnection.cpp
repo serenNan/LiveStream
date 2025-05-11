@@ -266,7 +266,6 @@ void TcpConnection::SetTimeoutCallback(int timeout, TimeOutCallback &&cb)
 void TcpConnection::OnTimeout()
 {
     NETWORK_ERROR << " host : " << peer_addr_.ToIpPort() << " timeout and close it.";
-    std::cout << "host : " << peer_addr_.ToIpPort() << " timeout and close it." << std::endl;
     OnClose();
 }
 
