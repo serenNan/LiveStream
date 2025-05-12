@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/">
+        <file alias="pushstream_style.qss">../ui/pushstream_style.qss</file>
+        <file alias="style.qss">../ui/style.qss</file>
+    </qresource>
+</RCC> 

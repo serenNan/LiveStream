@@ -145,8 +145,8 @@ TEST(TestStringUtils, SplitStringWithFSM)
     EXPECT_EQ(result8[4], "five");
 }
 
-int main(int argc, char **argv)
-{
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+// int main(int argc, char **argv)
+// {
+//     ::testing::InitGoogleTest(&argc, argv);
+//     return RUN_ALL_TESTS();
+// }

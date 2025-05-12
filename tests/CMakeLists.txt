@@ -4,7 +4,6 @@ link_directories(${CMAKE_SOURCE_DIR}/third_party/gtest/lib)
 
 
 # Base 库测试
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} TEST_SOURCE)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/base TEST_SOURCE)
 add_executable(BaseTest ${TEST_SOURCE})
 
@@ -77,4 +76,12 @@ target_link_libraries(TestRtmpClient
     base
     network
     mmedia
+)
+
+add_executable(TestServer ./TestServer.cpp)
+target_link_libraries(TestServer
+    base
+    network
+    mmedia
+    live
 )

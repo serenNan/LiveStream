@@ -8,23 +8,37 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 COMPONENTS Widgets REQUIRED) # Qt COMPONENTS
-aux_source_directory(./src srcs)
 
-# 添加资源文件
-set(RESOURCE_FILES
-    src/resources.qrc
-)
+# 设置UI文件搜索路径
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
+
+
+# 收集源文件
+file(GLOB_RECURSE SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE INCLUDE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+file(GLOB_RECURSE UI_FILES "${CMAKE_CURRENT_SOURCE_DIR}/ui/*.ui")
+
+# 添加QRC资源文件
+set(QRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/qrc/resources.qrc")
+
 
 # Specify MSVC UTF-8 encoding   
 add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 add_executable(${PROJECT_NAME}
-    WIN32 # If you need a terminal for debug, please comment this statement 
-    ${srcs}
-    ${RESOURCE_FILES}
-) 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+    WIN32 # If you need a terminal for debug, please comment this statement
+    ${SRC_FILES}
+    ${INCLUDE_FILES}
+    ${UI_FILES}
+    ${QRC_FILES}
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Widgets
     base
     live
