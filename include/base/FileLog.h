@@ -15,6 +15,9 @@ namespace tmms
             kRotateHour,   ///< 每小时切分
             kRotateDay,    ///< 每天切分
         };
+        class FileLog;
+        using FileLogPtr = std::shared_ptr<FileLog>;
+
         /**
          * @brief 文件日志类，提供日志文件操作功能
          *
@@ -68,6 +71,5 @@ namespace tmms
             std::string file_path_; ///< 当前日志文件路径
             RotateType rotate_type_{kRotateNone};
         };
-        using FileLogPtr = std::shared_ptr<FileLog>;
     } // namespace base
 } // namespace tmms

@@ -53,13 +53,13 @@ namespace tmms
             void RotateMinutes(const FileLogPtr &file);
 
           private:
-            std::unordered_map<std::string, FileLogPtr> logs_;
-            std::mutex lock_;
-            int last_year_{-1};
-            int last_month_{-1};
-            int last_day_{-1};
-            int last_hour_{-1};
-            int last_minute_{-1};
+            std::unordered_map<std::string, FileLogPtr> logs_; ///< 存储文件名到日志实例的映射
+            std::mutex lock_;                                  ///< 用于保护日志映射表的互斥锁
+            int last_year_{-1};                                ///< 上次检查时的年份
+            int last_month_{-1};                               ///< 上次检查时的月份
+            int last_day_{-1};                                 ///< 上次检查时的日期
+            int last_hour_{-1};                                ///< 上次检查时的小时
+            int last_minute_{-1};                              ///< 上次检查时的分钟
         };
     } // namespace base
 } // namespace tmms

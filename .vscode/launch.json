@@ -29,7 +29,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "QtBuild",
@@ -47,7 +47,7 @@
             ],
             "externalConsole": false,
             "miDebuggerPath": "/usr/bin/gdb",
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "Test",
@@ -77,7 +77,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestTcpConnection",
@@ -107,7 +107,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestTcpServer",
@@ -137,7 +137,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestTcpClient",
@@ -167,7 +167,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestUdpClient",
@@ -197,7 +197,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestUdpServer",
@@ -227,7 +227,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestRtmpServer",
@@ -257,7 +257,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "TestRtmpClient",
@@ -287,7 +287,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         },
         {
             "name": "simple_thread_pool_test",
@@ -317,7 +317,7 @@
             "sourceFileMap": {
                 "/build": "${workspaceFolder}/build"
             },
-            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95-1/tonka3000.qtvsctools/qt.natvis.xml"
+            "visualizerFile": "/home/serenNan/.cursor-server/data/User/workspaceStorage/1f47c16015ed5a7c319c2df3dffa6b95/tonka3000.qtvsctools/qt.natvis.xml"
         }
     ]
 }
