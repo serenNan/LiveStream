@@ -78,6 +78,21 @@ target_link_libraries(TestRtmpClient
     mmedia
 )
 
+# 性能测试工具
+add_executable(TestRtmpBenchmark ./rtmp/TestRtmpBenchmark.cpp)
+target_link_libraries(TestRtmpBenchmark
+    base
+    network
+    mmedia
+)
+
+add_executable(TestRtmpLatency ./rtmp/TestRtmpLatency.cpp)
+target_link_libraries(TestRtmpLatency
+    base
+    network
+    mmedia
+)
+
 add_executable(TestServer ./TestServer.cpp)
 target_link_libraries(TestServer
     base
